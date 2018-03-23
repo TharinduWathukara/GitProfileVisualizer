@@ -1,18 +1,64 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { Routes , RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SigninComponent } from './components/signin/signin.component';
+import { SignupComponent } from './components/signup/signup.component';
 
+import { ProfileService } from './services/ProfileService';
+import { AuthenticationService } from './services/AuthenticationService';
+
+
+const routes: Routes = [
+  {
+    path:'',
+    redirectTo:'home',
+    pathMatch:'full'
+  },
+  {
+    path:'home',
+    component:HomeComponent
+  },
+  {
+    path:'signIn',
+    component:SigninComponent
+  },{
+    path:'signUp',
+    component:SignupComponent
+  },
+  {
+    path:'profile',
+    component:ProfileComponent
+  }
+]
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    SigninComponent,
+    SignupComponent,
+    ProfileComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot(routes)
+    
   ],
-  providers: [],
+  providers: [
+    ProfileService,
+    AuthenticationService
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
