@@ -29,6 +29,9 @@ mongoose.Promise=global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/gpa');
 
 let db = mongoose.connection;
+db.on('connected',()=>{
+    console.log('Connected to the database')
+});
 //mongo errors
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',function(){
@@ -67,13 +70,16 @@ app.get('/getgithubuser/:username',githubController.getUser);
 app.get('/getrepositories/:username',githubController.getUserRepos);
 app.get('/getReposDetails/:username',githubController.getReposDetails);
 app.get('/getPopularLanguages/:username',githubController.getPopularLanguages);
+app.post('/getRepo',githubController.getRepo);
+app.post('/getRepoLanguages',githubController.getRepoLanguages);
+app.post('/getRepoStats',githubController.getRepoStats);
 
 
 //mongodb
 app.post('/signUp',mongodbController.signUp);
 app.post('/signIn',mongodbController.signIn);
 app.get('/profile', mongodbController.getProfile);
-app.get('/logout', mongodbController.logout);
+app.get('/signOut', mongodbController.signOut);
 
 //error handler
 //404 error

@@ -1,0 +1,28 @@
+.navbar{
+    margin: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    border-radius: 0;
+}
+
+.navbar-header{
+    padding: 10px;
+}
+
+/* .navbar-brand{
+    min-height: 60px;
+} */
+
+.logo{
+    height: 85px;
+}
+
+.navbar-text{
+    font-size: 40px;
+}
+
+#myNavbar{
+    padding-top: 25px;
+    font-size: 17px;
+}

@@ -149,10 +149,84 @@ githubFunctions = {
                 // res.json(data);
             }
         })
+    },
+
+    getRepo:(req,res)=>{
+        request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+        (err,body,response) => {
+            if(err) console.log(err);
+            else{
+                res.json(JSON.parse(body.body));
+            }
+        });
+    },
+
+    getRepoLanguages:(req,res)=>{
+        request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/languages' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+        (err,body,response) => {
+            if(err) console.log(err);
+            else{
+                var lang = JSON.parse(body.body);
+                var languages = [];
+
+                for (var key in lang){
+                    languages.push(key);
+                }
+                data={
+                    "languages":languages
+                }
+                res.json(data);
+            }
+        });
+    },
+
+    getRepoStats:(req,res)=>{
+        request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+        (err,body,response) => {
+            if(err) console.log(err);
+            else{
+                data={
+                    "username":req.body.username,
+                    "body":req.body.name
+                }
+                var commits = JSON.parse(body.body);
+                data.commits = commits;
+                var dates = [];
+                var stats = [];
+                for(var i=0;i<commits.length;i++){
+                    var d = this.getStats(data);
+                    console.log(d);
+                }
+            }
+        });
     }
+
 
 }
 
+
+var getStats = function(data){
+    var commits = data.commits;
+    var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Nov","Dec"];
+    request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits' +'/'+ commits[i].sha + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+    (err,body,response) => {
+        if(err) console.log(err);
+        else{
+            var commit = JSON.parse(body.body);
+            var d = new Date(commit.commit.author.date);
+            var date = month[d.getMonth()-1] +" "+ d.getDate().toString();
+            dates.push(date);
+            stats.push(commit.stats.total);
+            if(i==commits.length){
+                var d={
+                    "dates":dates,
+                    "stats":stats
+                }
+                return d;
+            }
+        }
+    });
+}
 
 
 module.exports = githubFunctions;

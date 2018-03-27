@@ -1,0 +1,37 @@
+<div class="container">
+	<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <a routerLink='/home' routerLinkActive='active'>
+        <img src="../../../assets/imgs/gpalogo.png" class="signinlogo" width="65%" alt="logo">
+      </a>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong>Sign In to GIT Profile Visualizer</strong></h3>
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <fieldset>
+              <div class="form-group">
+                <strong>E-mail:</strong>
+                <input class="form-control" placeholder="E-mail" [(ngModel)]='logemail' name="logemail" type="email" autofocus required>
+              </div>
+              <div class="form-group">
+                <strong>Password:</strong>
+                <input class="form-control" placeholder="Password" [(ngModel)]='logpassword' name="logpassword" type="password" autofocus required>
+              </div>
+              <!-- this is for show errors -->
+              <div *ngIf="err">
+                <div class="alert alert-danger" role="alert">
+                  <strong>Error!</strong> {{ err }}
+                </div>
+              </div>
+              <button type="button" class="btn btn-success btn-block" (click)="signIn()">SignIn</button>
+              <br>
+              <p>New Member? <a routerLink='/signUp' routerLinkActive='active'>Sign up</a></p>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

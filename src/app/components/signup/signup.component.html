@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <a routerLink='/home' routerLinkActive='active'>
+          <img src="../../../assets/imgs/gpalogo.png" class="signuplogo" width="65%" alt="logo">
+        </a>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Sign Up to GIT Profile Visualizer</strong></h3>
+          </div>
+          <div class="panel-body">
+            <form role="form">
+              <fieldset>
+                <div class="form-group">
+                  <strong>Full Name:</strong>
+                  <input class="form-control" placeholder="Full Name" [(ngModel)]='sfullname' name="sfullname" type="text" autofocus required>
+                </div>
+                <div class="form-group">
+                  <strong>E-mail:</strong>
+                  <input class="form-control" placeholder="E-mail" [(ngModel)]='semail' name="semail" type="email" autofocus required>
+                </div>
+                <div class="form-group">
+                    <strong>GitHub Username:</strong>
+                    <input class="form-control" placeholder="GitHub Username" [(ngModel)]='sgitusername' name="sgitusername" type="text" autofocus required>
+                </div>
+                <div class="form-group">
+                  <strong>Password:</strong>
+                  <input class="form-control" placeholder="Password" [(ngModel)]='spassword' name="spassword" type="password" autofocus required>
+                </div>
+                <div class="form-group">
+                    <strong>Confirm Password:</strong>
+                    <input class="form-control" placeholder="Confirm Password" [(ngModel)]='spasswordConf' name="spasswordConf" type="password" autofocus required>
+                </div>
+                <!-- this is for show errors -->
+                <div *ngIf="err">
+                  <div class="alert alert-danger" role="alert">
+                    <strong>Error!</strong> {{ err }}
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success btn-block" (click)="signUp()">SignUp</button>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

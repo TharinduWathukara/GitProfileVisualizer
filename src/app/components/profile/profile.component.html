@@ -1,0 +1,154 @@
+<app-navbar></app-navbar>
+<br>
+<div *ngIf="profile">
+  <div class="col-md-3">
+    <!-- <div class="panel panel-default">
+      <img src="{{ profile.avatar_url }}" width="100%">
+      <div class="panel-heading">
+        <div class="panel-title">{{ profile.name }}</div>
+      </div>
+    </div> -->
+
+    <div class="profile-sidebar">
+      <!-- SIDEBAR USERPIC -->
+      <div class="profile-userpic">
+        <img src="{{ profile.avatar_url }}" class="img-responsive" alt="">
+      </div>
+      <!-- END SIDEBAR USERPIC -->
+      <!-- SIDEBAR USER TITLE -->
+      <div class="profile-usertitle">
+        <div class="profile-usertitle-name">
+          {{ profile.name }}
+        </div>
+        <div class="profile-usertitle-login">
+          {{ profile.login }}
+        </div>
+      </div>
+      
+      <div *ngIf="profile.bio" class="text-center profile-bio"> "{{ profile.bio }}" </div>
+
+      <!-- END SIDEBAR USER TITLE -->
+      <!-- SIDEBAR BUTTONS -->
+      <div class="profile-userbuttons">
+        <a href="{{ profile.html_url }}" target="_blank"><button type="button" class="btn btn-success btn-sm">Show Profile</button></a>
+      </div>
+      <!-- END SIDEBAR BUTTONS -->
+      <br>
+      
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">Profile Details</div>
+        </div>
+        <div class="panel-body">
+            <div class="container">
+              <strong>Email:</strong>
+              <p *ngIf="profile.email">{{ profile.email }}</p>
+              <p *ngIf="!profile.email">Not initialized</p>
+            </div>
+
+            <div class="container">
+              <strong>Blog:</strong>
+              <p *ngIf="profile.blog">{{ profile.blog }}</p>
+              <p *ngIf="!profile.blog">Not initialized</p>
+            </div>
+
+            <div class="container">
+              <strong>Company:</strong>
+              <p *ngIf="profile.company">{{ profile.company }}</p>
+              <p *ngIf="!profile.company">Not initialized</p>
+            </div>
+
+            <div class="container">
+              <strong>Location:</strong>
+              <p *ngIf="profile.location">{{ profile.location }}</p>
+              <p *ngIf="!profile.location">Not initialized</p>
+            </div>
+
+            <div class="container">
+              <strong *ngIf="profile.hireable">Hireable</strong>
+              <strong *ngIf="!profile.hireable">Not Hireable</strong>
+            </div>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-body">
+          <div class="container panel-heading">
+            <strong>Public Repositories : </strong>
+            <span *ngIf="profile.public_repos">{{ profile.public_repos }}</span>
+            <span *ngIf="!profile.public_repos">0</span>
+          </div>
+          <div class="container panel-heading">
+            <strong>Public Gists : </strong>
+            <span *ngIf="profile.public_gists">{{ profile.public_gists }}</span>
+            <span *ngIf="!profile.public_gists">0</span>
+          </div>
+          <div class="container panel-heading">
+            <strong>Followers : </strong>
+            <span *ngIf="profile.followers">{{ profile.followers }}</span>
+            <span *ngIf="!profile.followers">0</span>
+          </div>
+          <div class="container panel-heading">
+            <strong>Followings : </strong>
+            <span *ngIf="profile.following">{{ profile.following }}</span>
+            <span *ngIf="!profile.following">0</span>
+          </div>
+        </div>
+      </div>
+      
+
+      
+
+
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div>
+      <div class="col-md-4">
+        <!-- popular languages -->
+        <canvas id="canvas1" style="width:100px; height:100px;"></canvas>
+      </div>
+  
+  
+      <div class="col-md-4">
+        <!-- popular repos by stars -->
+        <canvas id="canvas3" style="width:100px; height:100px;"></canvas>
+      </div>
+  
+      <div class="col-md-4">
+        <!-- popular repos by watching -->
+        <canvas id="canvas4" width="100px" height="100px"> </canvas>
+      </div>
+    </div>
+    
+
+    <div>
+      <!-- size of repositories -->
+      <canvas id="canvas2" width="400px" height="250px"> </canvas>
+    </div>
+
+    <div>
+      <!-- for repositories -->
+      <h3>Public Repositories :</h3>
+      <div *ngIf="repos">
+        <div *ngFor="let repo of repos" class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">{{ repo.name }}</div>
+          </div>
+          <div class="panel-body">
+            <strong>Language:</strong>
+            <span *ngIf="repo.language">{{ repo.language }}</span>
+            <span *ngIf="!repo.language">Not initialized</span>
+            <strong>Watchers:</strong>
+            <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
+            <span *ngIf="!repo.watchers">0</span>
+            <strong>Issues:</strong>
+            <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
+            <span *ngIf="!repo.open_issues">0</span>
+            <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons">View</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

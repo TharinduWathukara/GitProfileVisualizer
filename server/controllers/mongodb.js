@@ -23,6 +23,8 @@ mongodbFunction = {
           return next(error);
         } else {
           req.session.user = user;
+          req.session.cookie.expires = new Date(Date.now() + 3600000);
+          req.session.cookie.maxAge = 3600000;
           return res.redirect('/profile');
         }
       });
@@ -42,6 +44,8 @@ mongodbFunction = {
           return next(err);
         } else {
           req.session.user = user;
+          req.session.cookie.expires = new Date(Date.now() + 3600000);
+          req.session.cookie.maxAge = 3600000;
           // console.log(req.session.user);
           return res.redirect('/profile');
         }
@@ -54,7 +58,6 @@ mongodbFunction = {
   },
 
   getProfile:(req,res,next)=>{
-    // console.log(req.session.user);
     User.findById(req.session.user._id)
     .exec(function (error, user) {
       if (error) {
@@ -72,17 +75,20 @@ mongodbFunction = {
     });
   },
 
-  logout:(req,res,next)=>{
-    if (req.session) {
+  signOut:(req,res,next)=>{
+    if (req.session.user) {
       // delete session object
-      req.session.destroy(function (err) {
-        if (err) {
-          return next(err);
-        }
-        //  else {
-        //   return res.redirect('/');
-        // }
-      });
+      // req.session.destroy(function (err) {
+      //   if (err) {
+      //     return next(err);
+      //   }
+      //    else {
+      //     // return res.redirect('/');
+      //     res.json({"message":"Successfully SignOut"});
+      //   }
+      // });
+      req.session.user=null;
+      res.json({"message":"Successfully SignOut"});
     }
   }
 }

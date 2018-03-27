@@ -1,0 +1,80 @@
+body {
+    background: #F1F3FA;
+  }
+  
+  /* Profile container */
+  .profile {
+    margin: 20px 0;
+  }
+  
+  /* Profile sidebar */
+  .profile-sidebar {
+    background: #fff;
+  }
+  
+  .profile-userpic img {
+    float: none;
+    margin: 0 auto;
+    width: 70%;
+    height: 70%;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+  }
+  
+  .profile-usertitle {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile-usertitle-name {
+    color: rgb(67, 22, 22);
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .profile-usertitle-login {
+    /* text-transform: uppercase; */
+    color: lightslategray;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .profile-userbuttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .profile-userbuttons .btn {
+    background: blue;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 15px;
+    margin-right: 5px;
+  }
+  
+  .profile-userbuttons .btn:last-child {
+    margin-right: 0px;
+  }
+      
+  .profile-bio{
+      font-style: italic;
+      color: rgb(75, 80, 80);
+      font-family: cursive;
+  }
+
+table{
+    width: 100%;
+}
+
+td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}

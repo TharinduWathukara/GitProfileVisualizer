@@ -1,0 +1,31 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a routerLink='/home' routerLinkActive='active'><img class="navbar-brand logo img-circle" src="../../../assets/imgs/gpalogo.png"></a>
+      <a class="navbar-brand navbar-text" routerLink='/home' routerLinkActive='active'>GIT Profile Visualizer</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a routerLink='/home' routerLinkActive='active'>Home</a></li>
+        <!-- <li><a href="#">Page 2</a></li> -->
+        <li><a routerLink='/aboutUs' routerLinkActive='active'>About Us</a></li>
+        <li *ngIf="!isSignIn"><a routerLink='/signUp' routerLinkActive='active'><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li *ngIf="!isSignIn"><a routerLink='/signIn' routerLinkActive='active'><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+        <li *ngIf="isSignIn" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img src="{{ avatarUrl }}" width="30px" style="border-radius:4px;" alt="" /><span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-cart" style="width:200px" role="menu">
+              <li style="padding:5px;"><strong>{{ name }}</strong></li>
+              <li class="divider"></li>
+              <li><a class="text-center" routerLink='/profile' routerLinkActive='active'>View Profile</a></li>
+              <li><a class="text-center" (click)="signOut()">Sign Out</a></li>
+          </ul>
+        </li>          
+      </ul>
+    </div>
+  </div>
+</nav>

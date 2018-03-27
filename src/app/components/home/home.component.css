@@ -1,0 +1,91 @@
+.jumbotron{
+    margin: 0%;
+    width: 100%;
+    border-radius: 0;
+    background: -webkit-linear-gradient(90deg, rgb(31, 25, 25) 10%, rgb(65, 65, 65) 90%); /* Chrome 10+, Saf5.1+ */
+    background:    -moz-linear-gradient(90deg, rgb(31, 25, 25) 10%, rgb(65, 65, 65) 90%); /* FF3.6+ */
+    background:     -ms-linear-gradient(90deg, rgb(31, 25, 25) 10%, rgb(65, 65, 65) 90%); /* IE10 */
+    background:      -o-linear-gradient(90deg, rgb(31, 25, 25) 10%, rgb(65, 65, 65) 90%); /* Opera 11.10+ */
+    background:         linear-gradient(90deg, rgb(31, 25, 25) 10%, rgb(65, 65, 65) 90%); /* W3C */
+}
+
+.text-center{
+    color: white;
+}
+
+.panel{
+    width: 80%;
+    margin: 0 auto;
+}
+
+strong{
+    color:rgb(0, 81, 128);
+}
+
+small{
+    color:rgb(104, 119, 117);
+    font-size:12px;
+}
+
+
+.profile {
+    margin: 20px 0;
+  }
+  
+  /* Profile sidebar */
+  .profile-sidebar {
+    background: #fff;
+  }
+  
+  .profile-userpic img {
+    float: none;
+    margin: 0 auto;
+    width: 70%;
+    height: 70%;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+  }
+  
+  .profile-usertitle {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .profile-usertitle-name {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  
+  .profile-usertitle-login {
+    /* text-transform: uppercase; */
+    color: lightslategray;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .profile-userbuttons {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .profile-userbuttons .btn {
+    background: blue;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 15px;
+    margin-right: 5px;
+  }
+  
+  .profile-userbuttons .btn:last-child {
+    margin-right: 0px;
+  }
+      
+  .profile-bio{
+      font-style: italic;
+      color: rgb(75, 80, 80);
+      font-family: cursive;
+  }

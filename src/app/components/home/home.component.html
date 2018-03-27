@@ -1,0 +1,139 @@
+<app-navbar></app-navbar>
+
+<div class="jumbotron container">
+  <div class="d-md-flex flex-items-center gutter-md-spacious">
+    <div class="col-md-7 text-center">
+      <h1 class="alt-h0 text-white lh-condensed-ultra mb-3"> Build for GitHub Users</h1>
+      <p class="alt-lead mb-4">GIT Profile Visualizer is basically visualizing the GIT user Profiles in better way. This product will
+                  analyze the user GIT profiles. By using this web application GIT users can get better understand about
+                  their GIT profiles. They can view what are their popular programming languages, what are the most
+                  popular project repositories, and main thing is checking code quality. Therefore, users can easily
+                  understand what are the issues in their cording standards. Therefore, users can easily make their GIT
+                  profiles more professional way.</p>
+    </div>
+    <div class="col-md-5">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h2 class="panel-header"><strong>Quick Search</strong></h2>
+          </div>
+          <div class="panel-body">
+            <p><small>Enter below your Github Username to analyze your GitHub Profile</small></p>
+            <form role="form" class="search-form">
+              <fieldset>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="GitHub Username" [(ngModel)]='gitUserName' name="gitUserName" (keyup)="findProfile()">
+                </div>
+              </fieldset>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <br>
+  <div *ngIf="profile">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="profile-sidebar">
+          <!-- SIDEBAR USERPIC -->
+          <div class="profile-userpic">
+            <img src="{{ profile.avatar_url }}" class="img-responsive" alt="">
+          </div>
+          <!-- END SIDEBAR USERPIC -->
+          <!-- SIDEBAR USER TITLE -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{ profile.name }}
+            </div>
+            <div class="profile-usertitle-login">
+              {{ profile.login }}
+            </div>
+          </div>
+                
+          <div *ngIf="profile.bio" class="text-center profile-bio"> "{{ profile.bio }}" </div>
+        
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <a href="{{ profile.html_url }}" target="_blank"><button type="button" class="btn btn-success btn-sm">Show Profile</button></a>
+          </div>
+          <!-- END SIDEBAR BUTTONS -->
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">Profile Details</div>
+          </div>
+          <div class="panel-body">
+            <div class="container">
+              <strong>Email:</strong>
+              <p *ngIf="profile.email">{{ profile.email }}</p>
+              <p *ngIf="!profile.email">Not initialized</p>
+            </div>
+            <div class="container">
+              <strong>Blog:</strong>
+              <p *ngIf="profile.blog">{{ profile.blog }}</p>
+              <p *ngIf="!profile.blog">Not initialized</p>
+            </div>
+            <div class="container">
+              <strong>Company:</strong>
+              <p *ngIf="profile.company">{{ profile.company }}</p>
+              <p *ngIf="!profile.company">Not initialized</p>
+            </div>
+            <div class="container">
+              <strong>Location:</strong>
+              <p *ngIf="profile.location">{{ profile.location }}</p>
+              <p *ngIf="!profile.location">Not initialized</p>
+            </div>
+            <div class="container">
+              <strong *ngIf="profile.hireable">Hireable</strong>
+              <strong *ngIf="!profile.hireable">Not Hireable</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+      <div class="col-md-6">
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <div class="panel-title">Repository Details</div>
+          </div>
+          <div class="panel-body">
+            <div class="container panel-heading">
+              <strong>Public Repositories : </strong>
+              <span *ngIf="profile.public_repos">{{ profile.public_repos }}</span>
+              <span *ngIf="!profile.public_repos">0</span>
+            </div>
+            <div class="container panel-heading">
+              <strong>Public Gists : </strong>
+              <span *ngIf="profile.public_gists">{{ profile.public_gists }}</span>
+              <span *ngIf="!profile.public_gists">0</span>
+            </div>
+            <div class="container panel-heading">
+              <strong>Followers : </strong>
+              <span *ngIf="profile.followers">{{ profile.followers }}</span>
+              <span *ngIf="!profile.followers">0</span>
+            </div>
+            <div class="container panel-heading">
+              <strong>Followers : </strong>
+              <span *ngIf="profile.following">{{ profile.following }}</span>
+              <span *ngIf="!profile.following">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    
+    </div>
+
+  </div>
+    
+</div>
