@@ -17,9 +17,9 @@ export class ProfileService {
     return this.http.get('http://localhost:3000/getrepositories/'.concat(username)).map(res=>res.json());
   }
 
-  getUsername(){
-    return this.http.get('http://localhost:3000/profile/',{withCredentials: true}).map(res=>res.json());
-  }
+  // getUsername(){
+  //   return this.http.get('http://localhost:3000/profile/',{withCredentials: true}).map(res=>res.json());
+  // }
 
   getReposDetails(username:string){
     return this.http.get('http://localhost:3000/getReposDetails/'.concat(username)).map(res=>res.json());
@@ -43,6 +43,14 @@ export class ProfileService {
       "name":name
     }
     return this.http.post('http://localhost:3000/getRepoLanguages',data,{withCredentials: true}).map(res=>res.json());
+  }
+
+  getRepoStatistics(username:string,name:string){
+    let data = {
+      "username":username,
+      "name":name
+    }
+    return this.http.post('http://localhost:3000/getRepoStats',data,{withCredentials:true}).map(res=>res.json());
   }
 
 }

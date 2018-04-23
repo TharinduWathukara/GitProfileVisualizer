@@ -64,3 +64,25 @@ body {
       color: rgb(75, 80, 80);
       font-family: cursive;
   }
+
+table{
+  width: 100%;
+}
+
+td{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+
+
+.repository_list{
+  width: 240px;
+  display: inline-block;
+  margin: 5px;
+}

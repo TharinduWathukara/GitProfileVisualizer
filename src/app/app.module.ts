@@ -15,6 +15,7 @@ import { ProfileService } from './services/ProfileService';
 import { AuthenticationService } from './services/AuthenticationService';
 import { AuthGuard } from './services/AuthGuard';
 import { RepoComponent } from './components/repo/repo.component';
+import { RepoPipe } from './pipes/repo.pipe';
 
 
 const routes: Routes = [
@@ -42,7 +43,7 @@ const routes: Routes = [
   {
     path:'repos/:name',
     component:RepoComponent,
-    // canActivate:[AuthGuard]
+    canActivate:[AuthGuard]
   }
 ]
 
@@ -54,7 +55,8 @@ const routes: Routes = [
     SigninComponent,
     SignupComponent,
     ProfileComponent,
-    RepoComponent
+    RepoComponent,
+    RepoPipe
   ],
   imports: [
     BrowserModule,

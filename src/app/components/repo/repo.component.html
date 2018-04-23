@@ -80,9 +80,15 @@
                 </div>
               </td>
             </tr>
+            <tr *ngIf="statistics.contributors">
+              <td valign="top"><strong>Contributors : </strong></td>
+              <td>
+                <div *ngFor="let contributor of statistics.contributors">
+                  <p>{{ contributor }}</p>
+                </div>
+              </td>
+            </tr>
           </table>
-            
-            
         </div>
       </div>
       
@@ -93,5 +99,22 @@
     </div>
   </div>
   <div class="col-md-9">
+
+    <!-- for statistics -->
+    <canvas id="canvas1" width="400px" height="150px"> </canvas>
+
+    <div>
+      <h3 style="padding-left:20px; padding-top:10px;">Contribution</h3>
+
+      <div class="col-md-5 col-md-offset-1">
+        <!-- for contribution by statistics -->
+        <canvas id="canvas2" width="100px" height="100px"> </canvas>        
+      </div>
+      <div class="col-md-5">
+        <!-- for contribution by number of commits -->
+        <canvas id="canvas3" width="100px" height="100px"> </canvas>        
+      </div>
+    </div>
+
   </div>
 </div>

@@ -3,6 +3,7 @@ import { ProfileService } from '../../services/ProfileService';
 import { AuthenticationService } from '../../services/AuthenticationService';
 // import { Chart } from 'chart.js';
 import * as Chart from 'chart.js';
+import { RepoPipe } from '../../pipes/repo.pipe';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import * as Chart from 'chart.js';
 })
 export class ProfileComponent implements OnInit, OnChanges{
 
+  private repository_name:string;
   private gitUsername:string;
   private profile:any[];
   private repos:any[];
@@ -26,7 +28,7 @@ export class ProfileComponent implements OnInit, OnChanges{
   constructor(private profileservice : ProfileService, private authService:AuthenticationService) { }
 
   ngOnInit() {
-    this.getUsername();
+    this.getProfileDetails();
   }
 
   ngOnChanges(){
@@ -34,14 +36,12 @@ export class ProfileComponent implements OnInit, OnChanges{
   }
 
 
-  getUsername(){
-    this.profileservice.getUsername().subscribe(user =>{
-      this.gitUsername=user.username;
-      this.getProfile();
-      this.getRepos();
-      this.getReposDetails();
-      this.getPopularLanguages();
-    })
+  getProfileDetails(){
+    this.gitUsername = this.authService.getUsername();
+    this.getProfile();
+    this.getRepos();
+    this.getReposDetails();
+    this.getPopularLanguages();
   }
 
   getProfile(){

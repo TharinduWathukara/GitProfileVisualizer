@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable , OnInit} from '@angular/core';
 import { Http , Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthenticationService {
+export class AuthenticationService implements OnInit {
   private isSignIn:boolean;
   private gitUsername:string;
 
-  constructor(private http:Http) {
+  constructor(private http:Http) { }
+
+  ngOnInit(){
     this.isSignIn=false;
+    this.checkAuthenticationAtAuth();
   }
 
   signUp(fullname:string,gitusername:string,email:string,password:string,passwordConf:string){
@@ -54,6 +57,14 @@ export class AuthenticationService {
 
   isAuthenticate(){
     return this.isSignIn;
+  }
+
+  checkAuthenticationAtAuth(){
+    this.getProfile().subscribe(data => {
+      if(data.username){
+        this.setSignIn(data.username);
+      }
+    });
   }
 
   getUsername(){

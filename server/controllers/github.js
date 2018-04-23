@@ -187,15 +187,168 @@ githubFunctions = {
             else{
                 data={
                     "username":req.body.username,
-                    "body":req.body.name
+                    "name":req.body.name
                 }
                 var commits = JSON.parse(body.body);
                 data.commits = commits;
                 var dates = [];
-                var stats = [];
+                var statsTotal = [];
+                // var statsAdditions = [];
+                // var statsDeletions = [];
+
+                var contributors = [];
+
+                var contributorsByStats = [];
+                var contributionsByStats = [];
+
+                var contributorsByCommits = [];
+                var contributionsByCommits = [];
+
                 for(var i=0;i<commits.length;i++){
-                    var d = this.getStats(data);
-                    console.log(d);
+                    this.data = getStats(data,i);
+                }
+
+                function getStats(data,i){
+                    var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct" ,"Nov","Dec"];
+                    request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits/' + commits[i].sha + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+                    (err,body,response) => {
+                        if(err) console.log(err);
+                        else{
+                            var commit = JSON.parse(body.body);
+
+                            var d = new Date(commit.commit.author.date);
+                            var date = month[d.getMonth()] + " " + d.getFullYear().toString();
+                            
+                            if(dates.includes(date)){
+                                var index = dates.indexOf(date);
+                                statsTotal[index]=statsTotal[index] + commit.stats.total;
+                                // statsAdditions[index]=statsAdditions[index] + commit.stats.additions;
+                                // statsDeletions[index]=statsDeletions[index] + commit.stats.deletions;
+                            }
+                            else{
+                                dates.push(date);
+                                statsTotal.push(commit.stats.total);
+                                // statsAdditions.push(commit.stats.additions);
+                                // statsDeletions.push(commit.stats.deletions);
+                                
+                            }
+                            data.dates = dates;
+                            data.statsTotal = statsTotal;
+                            // data.statsAdditions = statsAdditions;
+                            // data.statsDeletions = statsDeletions;
+
+                            var contributor = commit.commit.author.name;
+                            
+                            if(!contributors.includes(contributor)){
+                                contributors.push(contributor);
+                            }
+                            
+                            if(contributorsByStats.includes(contributor)){
+                                var idx = contributorsByStats.indexOf(contributor);
+                                contributionsByStats[idx] = contributionsByStats[idx] + commit.stats.total;
+                            }else{
+                                contributorsByStats.push(contributor);
+                                contributionsByStats.push(commit.stats.total);
+                            }
+
+                            if(contributorsByCommits.includes(contributor)){
+                                var indx = contributorsByCommits.indexOf(contributor);
+                                contributionsByCommits[indx] +=1;
+                            }else{
+                                contributorsByCommits.push(contributor);
+                                contributionsByCommits.push(1);
+                            }
+
+                            data.contributorsByStats = contributorsByStats;
+                            data.contributionsByStats = contributionsByStats;
+
+                            data.contributorsByCommits = contributorsByCommits;
+                            data.contributionsByCommits = contributionsByCommits;
+                            
+                            if (i == commits.length-1) {
+
+                                let ab = sortByDate(data.dates,data.statsTotal);
+                                data.dates = ab.a;
+                                data.statsTotal = ab.b;
+                                // data.statsAdditions = abcd.c;
+                                // data.statsDeletions = abcd.d;
+
+                                let cd = bubbleSort(data.contributorsByStats,data.contributionsByStats);
+                                let ef = bubbleSort(data.contributorsByCommits,data.contributionsByCommits);
+
+                                let newConByStats=[];
+                                let newCbtionByStats=[];
+                                let newConByCommits=[];
+                                let newCbtionByCommits=[];
+
+                                let loop=10;
+                                if(contributors.length < loop){
+                                    loop = contributors.length;
+                                }
+
+                                for(let l=0;l<loop;l++){
+                                    newConByStats.push(cd.c[l]);
+                                    newCbtionByStats.push(cd.d[l]);
+                                    newConByCommits.push(ef.c[l]);
+                                    newCbtionByCommits.push(ef.d[l]);
+                                }
+
+                                data.contributors = contributors;
+                                data.contributorsByStats = newConByStats;
+                                data.contributionsByStats = newCbtionByStats;
+                                data.contributorsByCommits = newConByCommits;
+                                data.contributionsByCommits = newCbtionByCommits;
+
+                                res.json(data);
+                            }else{
+                                return data;
+                            }
+                        }
+                    });
+                }
+
+                function sortByDate(a,b){
+                    var swapped;
+                    do {
+                        swapped = false;
+                        for (var i=0; i < a.length-1; i++) {
+                            if (new Date(a[i]) > new Date(a[i+1])) {
+                                var temp1 = a[i];
+                                var temp2 = b[i];
+                                // var temp3 = c[i];
+                                // var temp4 = d[i];
+                                a[i] = a[i+1];
+                                b[i] = b[i+1];
+                                a[i+1] = temp1;
+                                b[i+1] = temp2;
+                                // c[i] = c[i+1];
+                                // d[i] = d[i+1];
+                                // c[i+1] = temp3;
+                                // d[i+1] = temp4;
+                                swapped = true;
+                            }
+                        }
+                    } while (swapped);
+                    return {'a':a,'b':b}
+                }
+
+                function bubbleSort(c,d){
+                    var swapped;
+                    do {
+                        swapped = false;
+                        for (var i=0; i < d.length-1; i++) {
+                            if (d[i] < d[i+1]) {
+                                var temp1 = c[i];
+                                var temp2 = d[i];
+                                c[i] = c[i+1];
+                                d[i] = d[i+1];
+                                c[i+1] = temp1;
+                                d[i+1] = temp2;
+                                swapped = true;
+                            }
+                        }
+                    } while (swapped);
+                    return {'c':c,'d':d}
                 }
             }
         });
@@ -205,28 +358,7 @@ githubFunctions = {
 }
 
 
-var getStats = function(data){
-    var commits = data.commits;
-    var month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Nov","Dec"];
-    request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits' +'/'+ commits[i].sha + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
-    (err,body,response) => {
-        if(err) console.log(err);
-        else{
-            var commit = JSON.parse(body.body);
-            var d = new Date(commit.commit.author.date);
-            var date = month[d.getMonth()-1] +" "+ d.getDate().toString();
-            dates.push(date);
-            stats.push(commit.stats.total);
-            if(i==commits.length){
-                var d={
-                    "dates":dates,
-                    "stats":stats
-                }
-                return d;
-            }
-        }
-    });
-}
+
 
 
 module.exports = githubFunctions;

@@ -39,60 +39,80 @@
         <div class="panel-heading">
           <div class="panel-title">Profile Details</div>
         </div>
-        <div class="panel-body">
-            <div class="container">
+        <div class="panel-body" style="padding:0;">
+          <table>
+            <tr><td>
               <strong>Email:</strong>
               <p *ngIf="profile.email">{{ profile.email }}</p>
               <p *ngIf="!profile.email">Not initialized</p>
-            </div>
+            </td></tr>
 
-            <div class="container">
+            <tr><td>
               <strong>Blog:</strong>
               <p *ngIf="profile.blog">{{ profile.blog }}</p>
               <p *ngIf="!profile.blog">Not initialized</p>
-            </div>
+            </td></tr>
 
-            <div class="container">
+            <tr><td>
               <strong>Company:</strong>
               <p *ngIf="profile.company">{{ profile.company }}</p>
               <p *ngIf="!profile.company">Not initialized</p>
-            </div>
+            </td></tr>
 
-            <div class="container">
+            <tr><td>
               <strong>Location:</strong>
               <p *ngIf="profile.location">{{ profile.location }}</p>
               <p *ngIf="!profile.location">Not initialized</p>
-            </div>
+            </td></tr>
 
-            <div class="container">
+            <tr><td>
               <strong *ngIf="profile.hireable">Hireable</strong>
               <strong *ngIf="!profile.hireable">Not Hireable</strong>
-            </div>
+            </td></tr>
+          </table>
         </div>
       </div>
 
       <div class="panel panel-warning">
-        <div class="panel-body">
-          <div class="container panel-heading">
-            <strong>Public Repositories : </strong>
-            <span *ngIf="profile.public_repos">{{ profile.public_repos }}</span>
-            <span *ngIf="!profile.public_repos">0</span>
-          </div>
-          <div class="container panel-heading">
-            <strong>Public Gists : </strong>
-            <span *ngIf="profile.public_gists">{{ profile.public_gists }}</span>
-            <span *ngIf="!profile.public_gists">0</span>
-          </div>
-          <div class="container panel-heading">
-            <strong>Followers : </strong>
-            <span *ngIf="profile.followers">{{ profile.followers }}</span>
-            <span *ngIf="!profile.followers">0</span>
-          </div>
-          <div class="container panel-heading">
-            <strong>Followings : </strong>
-            <span *ngIf="profile.following">{{ profile.following }}</span>
-            <span *ngIf="!profile.following">0</span>
-          </div>
+        <div class="panel-body" style="padding:0;">
+          <table>
+            <tr>
+              <td>
+                <strong>Public Repositories</strong>
+              </td>
+              <td>
+                <span *ngIf="profile.public_repos">: {{ profile.public_repos }}</span>
+                <span *ngIf="!profile.public_repos">: 0</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Public Gists</strong>
+              </td>
+              <td>
+                <span *ngIf="profile.public_gists">: {{ profile.public_gists }}</span>
+                <span *ngIf="!profile.public_gists">: 0</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Followers</strong>
+              </td>
+              <td>
+                <span *ngIf="profile.followers">: {{ profile.followers }}</span>
+                <span *ngIf="!profile.followers">: 0</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Followings</strong>
+              </td>
+              <td>
+                <span *ngIf="profile.following">: {{ profile.following }}</span>
+                <span *ngIf="!profile.following">: 0</span>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       
@@ -129,23 +149,35 @@
 
     <div>
       <!-- for repositories -->
-      <h3>Public Repositories :</h3>
+      <h3 style="display:inline-block">Public Repositories :</h3>
+
+      <div class="form-group" style="display:inline-block; margin-right:20px;">
+        <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
+      </div>
+
+      
       <div *ngIf="repos">
-        <div *ngFor="let repo of repos" class="panel panel-info">
+        <div *ngFor="let repo of repos | repo : repository_name" class="panel panel-info repository_list">
           <div class="panel-heading">
             <div class="panel-title">{{ repo.name }}</div>
           </div>
           <div class="panel-body">
-            <strong>Language:</strong>
-            <span *ngIf="repo.language">{{ repo.language }}</span>
-            <span *ngIf="!repo.language">Not initialized</span>
-            <strong>Watchers:</strong>
-            <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
-            <span *ngIf="!repo.watchers">0</span>
-            <strong>Issues:</strong>
-            <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
-            <span *ngIf="!repo.open_issues">0</span>
-            <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons">View</button></a>
+            <div>
+              <strong>Language:</strong>
+              <span *ngIf="repo.language">{{ repo.language }}</span>
+              <span *ngIf="!repo.language">Not initialized</span>    
+            </div>
+            <div>
+              <strong>Watchers:</strong>
+              <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
+              <span *ngIf="!repo.watchers">0</span>
+            </div>
+            <div>
+              <strong>Issues:</strong>
+              <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
+              <span *ngIf="!repo.open_issues">0</span>
+            </div>
+            <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons" style="float: right;">View</button></a>
           </div>
         </div>
       </div>
