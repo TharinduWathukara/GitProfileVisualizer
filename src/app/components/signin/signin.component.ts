@@ -21,14 +21,12 @@ export class SigninComponent implements OnInit {
 
   signIn(){
     this.authservice.signIn(this.logemail,this.logpassword).subscribe( data=>{
-        this.authservice.setSignIn(data.username);
-        this.router.navigate(['profile']);
-      },
-      err =>{
-        this.err=err;
-      }
-    )
-
+      this.authservice.setSignIn(data.username);
+      this.router.navigate(['profile']);
+    },
+    err =>{
+      this.err=err;
+    });
   }
 
 }

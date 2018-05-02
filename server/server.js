@@ -73,13 +73,14 @@ app.get('/getPopularLanguages/:username',githubController.getPopularLanguages);
 app.post('/getRepo',githubController.getRepo);
 app.post('/getRepoLanguages',githubController.getRepoLanguages);
 app.post('/getRepoStats',githubController.getRepoStats);
-
+app.post('/getCodeQuality',githubController.getCodeQuality);
 
 //mongodb
 app.post('/signUp',mongodbController.signUp);
 app.post('/signIn',mongodbController.signIn);
 app.get('/profile', mongodbController.getProfile);
 app.get('/signOut', mongodbController.signOut);
+app.get('/signInWithGithub',mongodbController.signInWithGithub);
 
 //error handler
 //404 error

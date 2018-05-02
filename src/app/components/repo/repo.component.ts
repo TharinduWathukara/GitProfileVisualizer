@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/ProfileService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/AuthenticationService';
 import * as Chart from 'chart.js';
 
@@ -20,9 +20,28 @@ export class RepoComponent implements OnInit {
   private chart2:any;  //for contributions by statistics
   private chart3:any;  //for contributions by number of commits
 
-  constructor(private profileService:ProfileService,private route:ActivatedRoute, private authService:AuthenticationService) { }
+  constructor(private profileService:ProfileService,private route:ActivatedRoute, 
+    private authService:AuthenticationService, private router:Router) { }
 
   ngOnInit() {
+    if(this.authService.isAuthenticate()){
+      this.getRepoDetails();
+    }
+    else{
+      this.authService.getProfile().subscribe(data =>{
+        if(data.username){
+          this.authService.setSignIn(data.username);
+          this.getRepoDetails();
+        }else{
+          this.router.navigate(['signIn']);
+        }
+      },err =>{
+        this.router.navigate(['signIn']);
+      });
+    }
+  }
+
+  getRepoDetails(){
     this.username = this.authService.getUsername();
     // this.username="TharinduWathukara";
     this.getRepo(this.username,this.route.snapshot.params['name']);

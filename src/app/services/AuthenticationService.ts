@@ -11,7 +11,6 @@ export class AuthenticationService implements OnInit {
 
   ngOnInit(){
     this.isSignIn=false;
-    this.checkAuthenticationAtAuth();
   }
 
   signUp(fullname:string,gitusername:string,email:string,password:string,passwordConf:string){
@@ -57,14 +56,6 @@ export class AuthenticationService implements OnInit {
 
   isAuthenticate(){
     return this.isSignIn;
-  }
-
-  checkAuthenticationAtAuth(){
-    this.getProfile().subscribe(data => {
-      if(data.username){
-        this.setSignIn(data.username);
-      }
-    });
   }
 
   getUsername(){

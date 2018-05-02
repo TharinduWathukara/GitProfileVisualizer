@@ -1,4 +1,6 @@
 const User = require('../mongodb/userschema');
+const request = require('request');
+const {githubConfig} = require ('../config');
 
 mongodbFunction = {
   signUp:(req,res,next)=>{
@@ -58,21 +60,29 @@ mongodbFunction = {
   },
 
   getProfile:(req,res,next)=>{
-    User.findById(req.session.user._id)
-    .exec(function (error, user) {
-      if (error) {
-        return next(error);
-      } else {
-        if (user === null) {
-          var err = new Error('Not authorized! Go back!');
-          err.status = 400;
-          return next(err);
+
+    if(req.session.user.authBy == 'viaGithub'){
+      let usr = req.session.user;
+      res.json({username:usr.gitusername});
+    }
+    
+    else {
+      User.findById(req.session.user._id)
+      .exec(function (error, user) {
+        if (error) {
+          return next(error);
         } else {
-          // res.json(JSON.parse(body.body));
-          res.json({username: user.gitusername});
+          if (user === null) {
+            var err = new Error('Not authorized! Go back!');
+            err.status = 400;
+            return next(err);
+          } else {
+            // res.json(JSON.parse(body.body));
+            res.json({username: user.gitusername});
+          }
         }
-      }
-    });
+      });
+    }
   },
 
   signOut:(req,res,next)=>{
@@ -90,6 +100,46 @@ mongodbFunction = {
       req.session.user=null;
       res.json({"message":"Successfully SignOut"});
     }
+  },
+
+
+  signInWithGithub:(req,res)=>{
+
+    const { query } = req;
+    const { code } = query;
+
+    if(!code){
+      res.json({
+        'success':false,
+        'message':"Error: no code"
+      });
+    }
+
+    request.post('https://github.com/login/oauth/access_token?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret + '&code=' + code, {headers: {'User-Agent':'GIT Profile Visualizer', 'Accept':'application/json'}},
+      (err,body,response) => {
+        if(err) console.log(err);
+        else{
+
+          const accessToken = (JSON.parse(body.body)).access_token;
+          
+          request.get('https://api.github.com/user' ,{headers: {'User-Agent':'GIT Profile Visualizer', 'Authorization': 'token ' + accessToken }},
+          (err1,body1,response1) => {
+            let data = (JSON.parse(body1.body));
+            let user = {
+              'email': data.email,
+              'gitusername': data.login,
+              'fullname': data.name,
+              'authBy': 'viaGithub'
+            }
+
+            req.session.user = user;
+            req.session.cookie.expires = new Date(Date.now() + 3600000);
+            req.session.cookie.maxAge = 3600000;
+
+            res.redirect('http://localhost:4200/profile');
+          });
+        }
+    });
   }
 }
 

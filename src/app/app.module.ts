@@ -38,12 +38,12 @@ const routes: Routes = [
   {
     path:'profile',
     component:ProfileComponent,
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
   {
     path:'repos/:name',
     component:RepoComponent,
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   }
 ]
 

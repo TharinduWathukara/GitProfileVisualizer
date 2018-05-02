@@ -17,12 +17,27 @@ export class NavbarComponent implements OnInit {
   constructor(private authService:AuthenticationService, private profileService:ProfileService, private router:Router) { }
 
   ngOnInit() {
-    this.isSignIn = this.authService.isAuthenticate();
-    this.gitUsername = this.authService.getUsername();
-    
-    this.profileService.getGitHubuserProfileInfo(this.gitUsername).subscribe(data=>{
-      this.name = data.name;
-      this.avatarUrl = data.avatar_url;
+    if(this.authService.isAuthenticate()){
+      this.isSignIn = true;
+      this.gitUsername = this.authService.getUsername();
+      this.getProfilePic();
+    }
+    else{
+      this.authService.getProfile().subscribe(data1 =>{
+        if(data1.username){
+          this.authService.setSignIn(data1.username);
+          this.isSignIn = this.authService.isAuthenticate();
+          this.gitUsername = this.authService.getUsername();
+          this.getProfilePic();
+        }
+      });
+    }
+  }
+
+  getProfilePic(){
+    this.profileService.getGitHubuserProfileInfo(this.gitUsername).subscribe(data2=>{
+      this.name = data2.name;
+      this.avatarUrl = data2.avatar_url;
       console.log(this.avatarUrl);
     });
   }

@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../services/AuthenticationService';
 // import { Chart } from 'chart.js';
 import * as Chart from 'chart.js';
 import { RepoPipe } from '../../pipes/repo.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -25,10 +26,24 @@ export class ProfileComponent implements OnInit, OnChanges{
   private chart3:any;     //for popular repos by stars
   private chart4:any;     //for popular repos by watching
 
-  constructor(private profileservice : ProfileService, private authService:AuthenticationService) { }
+  constructor(private profileservice : ProfileService, private authService:AuthenticationService, private router:Router) { }
 
   ngOnInit() {
-    this.getProfileDetails();
+    if(this.authService.isAuthenticate()){
+      this.getProfileDetails();
+    }
+    else{
+      this.authService.getProfile().subscribe(data =>{
+        if(data.username){
+          this.authService.setSignIn(data.username);
+          this.getProfileDetails();
+        }else{
+          this.router.navigate(['signIn']);
+        }
+      },err =>{
+        this.router.navigate(['signIn']);
+      });
+    }
   }
 
   ngOnChanges(){
@@ -38,6 +53,7 @@ export class ProfileComponent implements OnInit, OnChanges{
 
   getProfileDetails(){
     this.gitUsername = this.authService.getUsername();
+    // this.gitUsername = "TharinduWathukara";
     this.getProfile();
     this.getRepos();
     this.getReposDetails();
