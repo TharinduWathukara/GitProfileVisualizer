@@ -3,7 +3,7 @@ import { ProfileService } from '../../services/ProfileService';
 import { AuthenticationService } from '../../services/AuthenticationService';
 // import { Chart } from 'chart.js';
 import * as Chart from 'chart.js';
-import { RepoPipe } from '../../pipes/repo.pipe';
+import { SearchPipe } from '../../pipes/search.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,12 +19,14 @@ export class ProfileComponent implements OnInit, OnChanges{
   private repos:any[];
   private reposDetails:any[];
   private popularLanguages:any[];
+  private repoCommits:any[];
 
   // charts
   private chart1:any;     //for popular languages
   private chart2:any;     //for size of repositories
   private chart3:any;     //for popular repos by stars
   private chart4:any;     //for popular repos by watching
+  private chart5:any;     //for commits per repo
 
   constructor(private profileservice : ProfileService, private authService:AuthenticationService, private router:Router) { }
 
@@ -58,6 +60,7 @@ export class ProfileComponent implements OnInit, OnChanges{
     this.getRepos();
     this.getReposDetails();
     this.getPopularLanguages();
+    this.getRepoCommits();
   }
 
   getProfile(){
@@ -87,7 +90,7 @@ export class ProfileComponent implements OnInit, OnChanges{
           data: {
             datasets:[{
               data:reposDetails.sizeOfRepo,
-              backgroundColor:'plum',
+              backgroundColor:'DarkGray',
               label: 'Size'
             }],
             labels:reposDetails.repoSize
@@ -99,7 +102,7 @@ export class ProfileComponent implements OnInit, OnChanges{
             },
             title: {
               display: true,
-              text: 'Size of Repos(kb)'
+              text: 'Size of Repos(kb) - Top 15'
             }
           }
         });
@@ -244,6 +247,61 @@ export class ProfileComponent implements OnInit, OnChanges{
             title: {
               display: true,
               text: 'Popular Languages'
+            },
+            animation: {
+              animateScale: true,
+              animateRotate: true
+            }
+          }
+        });
+      });
+    });
+  }
+
+  getRepoCommits(){
+    this.profileservice.getRepoCommits(this.gitUsername).subscribe(repoCommits=>{
+      this.repoCommits=repoCommits;
+      // console.log(popularLanguages);
+
+      setTimeout(()=>{
+        // popular laguages
+        let ctx5 = document.getElementById('canvas5');
+        this.chart5 = new Chart(ctx5,{
+          type: 'doughnut',
+          data: {
+            datasets:[{
+              data:repoCommits.commits,
+              backgroundColor: [
+                'red',
+						    'orange',
+                'royalblue',
+                'green',
+						    'aqua',
+                'yellow',
+                'plum',
+                'pink',
+                'burlywood',
+                'peru',
+                'silver'
+              ],
+              label: 'Repos'
+            }],
+            labels:repoCommits.repositories
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display:false,           
+              position: 'left',
+              labels:{
+                usePointStyle:true,
+                padding:5,
+                fontSize:12,
+              }
+            },
+            title: {
+              display: true,
+              text: 'Commits per Repo'
             },
             animation: {
               animateScale: true,

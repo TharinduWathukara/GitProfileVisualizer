@@ -1,22 +1,22 @@
 <app-navbar></app-navbar>
 <br>
-<div *ngIf="profile">
-  <div class="col-md-3">
+<!-- <div *ngIf="profile">
+  <div class="col-md-3"> -->
     <!-- <div class="panel panel-default">
       <img src="{{ profile.avatar_url }}" width="100%">
       <div class="panel-heading">
         <div class="panel-title">{{ profile.name }}</div>
       </div>
     </div> -->
-
-    <div class="profile-sidebar">
+<!-- 
+    <div class="profile-sidebar"> -->
       <!-- SIDEBAR USERPIC -->
-      <div class="profile-userpic">
+      <!-- <div class="profile-userpic">
         <img src="{{ profile.avatar_url }}" class="img-responsive" alt="">
-      </div>
+      </div> -->
       <!-- END SIDEBAR USERPIC -->
       <!-- SIDEBAR USER TITLE -->
-      <div class="profile-usertitle">
+      <!-- <div class="profile-usertitle">
         <div class="profile-usertitle-name">
           {{ profile.name }}
         </div>
@@ -25,15 +25,15 @@
         </div>
       </div>
       
-      <div *ngIf="profile.bio" class="text-center profile-bio"> "{{ profile.bio }}" </div>
+      <div *ngIf="profile.bio" class="text-center profile-bio"> "{{ profile.bio }}" </div> -->
 
       <!-- END SIDEBAR USER TITLE -->
       <!-- SIDEBAR BUTTONS -->
-      <div class="profile-userbuttons">
+      <!-- <div class="profile-userbuttons">
         <a href="{{ profile.html_url }}" target="_blank"><button type="button" class="btn btn-success btn-sm">Show Profile</button></a>
-      </div>
+      </div> -->
       <!-- END SIDEBAR BUTTONS -->
-      <br>
+      <!-- <br>
       
       <div class="panel panel-info">
         <div class="panel-heading">
@@ -124,32 +124,32 @@
   </div>
   <div class="col-md-9">
     <div>
-      <div class="col-md-4">
+      <div class="col-md-4"> -->
         <!-- popular languages -->
-        <canvas id="canvas1" style="width:100px; height:100px;"></canvas>
+        <!-- <canvas id="canvas1" style="width:100px; height:100px;"></canvas>
       </div>
   
   
-      <div class="col-md-4">
+      <div class="col-md-4"> -->
         <!-- popular repos by stars -->
-        <canvas id="canvas3" style="width:100px; height:100px;"></canvas>
+        <!-- <canvas id="canvas3" style="width:100px; height:100px;"></canvas>
       </div>
   
-      <div class="col-md-4">
+      <div class="col-md-4"> -->
         <!-- popular repos by watching -->
-        <canvas id="canvas4" width="100px" height="100px"> </canvas>
+        <!-- <canvas id="canvas4" width="100px" height="100px"> </canvas>
       </div>
     </div>
     
 
-    <div>
+    <div> -->
       <!-- size of repositories -->
-      <canvas id="canvas2" width="400px" height="250px"> </canvas>
+      <!-- <canvas id="canvas2" width="400px" height="250px"> </canvas>
     </div>
 
-    <div>
+    <div> -->
       <!-- for repositories -->
-      <h3 style="display:inline-block">Public Repositories :</h3>
+      <!-- <h3 style="display:inline-block">Public Repositories :</h3>
 
       <div class="form-group" style="display:inline-block; margin-right:20px;">
         <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
@@ -157,7 +157,7 @@
 
       
       <div *ngIf="repos">
-        <div *ngFor="let repo of repos | repo : repository_name" class="panel panel-info repository_list">
+        <div *ngFor="let repo of repos | search : repository_name" class="panel panel-info repository_list">
           <div class="panel-heading">
             <div class="panel-title">{{ repo.name }}</div>
           </div>
@@ -183,4 +183,223 @@
       </div>
     </div>
   </div>
+</div> -->
+
+
+<div *ngIf="profile" class="row container" style="width: 100%; margin: 0 auto;">
+  <div class="col-md-5">
+    <div class="row">
+      <div class="col-md-7">
+          <div class="profile">
+              <img src="{{ profile.avatar_url }}" class="img-responsive" alt="Profile Photo">
+              <br>
+              <p style="font-size: 25px; text-align: center; color:darkslategray;">{{ profile.login }}</p>
+
+              <a href="{{ profile.html_url }}" target="_blank"><button type="button" style="border-radius: 0;" class="btn btn-success center-block btn-lg">Show Profile</button></a>
+          </div>
+      </div>
+      <div class="col-md-5">
+        <div class="profile-support-details">
+          <table>
+            <tr>
+              <td style="width: 60px; text-align: center">
+                <img src="../../../assets/imgs/svg/folder.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td>
+                <p style="font-size: 16px; font-weight: bold;">Public Repositories </p>
+                <p *ngIf="profile.public_repos">{{ profile.public_repos }}</p>
+                <p *ngIf="!profile.public_repos">0</p>
+              </td>
+            </tr>
+            <hr>
+            <tr>
+              <td style="width: 60px; text-align: center">
+                <img src="../../../assets/imgs/svg/puzzle.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td>
+                <p style="font-size: 16px; font-weight: bold;">Public Gists </p>
+                <p *ngIf="profile.public_gists">{{ profile.public_gists }}</p>
+                <p *ngIf="!profile.public_gists">0</p>
+              </td>
+            </tr>
+            <hr>
+            <tr>
+              <td style="width: 60px; text-align: center">
+                <img src="../../../assets/imgs/svg/conference_call.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td>
+                <p style="font-size: 16px; font-weight: bold;">Followers</p>
+                <p *ngIf="profile.followers">{{ profile.followers }}</p>
+                <p *ngIf="!profile.followers">0</p>
+              </td>
+            </tr>
+            <hr>
+            <tr>
+              <td style="width: 60px; text-align: center">
+                <img src="../../../assets/imgs/svg/sports_mode.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td>
+                <p style="font-size: 16px; font-weight: bold;">Followings</p>
+                <p *ngIf="profile.following">{{ profile.following }}</p>
+                <p *ngIf="!profile.following">0</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="profile-support-details">
+
+      <p class="text-center" style="color:black; font-size: 30px;">Personal Details</p>
+
+      <table>
+        <tr>
+          <td style="width: 60; text-align: center;">
+            <img src="../../../assets/imgs/svg/businessman.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Name</p>
+            <p style="font-size: 16px;">{{ profile.name }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.location">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/globe.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">From</p>
+            <p style="font-size: 16px;">{{ profile.location }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.email">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/feedback.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Email</p>
+            <p style="font-size: 16px;">{{ profile.email }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.blog">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/document.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Blog</p>
+            <p style="font-size: 16px;">{{ profile.blog }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.company">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/factory.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Company</p>
+            <p style="font-size: 16px;">{{ profile.company }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/debt.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p *ngIf="profile.hireable" style="font-size: 20px; font-weight: bold;">Hireable</p>
+            <p *ngIf="!profile.hireable" style="font-size: 20px; font-weight: bold;">Not Hireable</p>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </div>
+  </div>
+  
+  <div class="col-md-7">
+
+    <div class="profile-support-details">
+      <p style="font-family: 'Pacifico', cursive; font-size: 25px; text-align: center; padding: 10px;">{{ profile.bio }}</p>
+    </div>
+
+    <div class='doughnutChartsContainer container'>
+
+      <p class="text-center" style="color:black; font-size: 30px;">Profile Overview</p>
+
+      <div class="col-md-4 col-md-offset-1">
+        <br><br>
+        <!-- popular languages -->
+        <canvas id="canvas1" style="width:100px; height:100px;"></canvas>
+        <br><br>
+        <!-- commits per repo -->
+        <canvas id="canvas5" style="width:100px; height:100px;"></canvas>
+        <br><br>
+      </div>
+      <div class="col-md-4 col-md-offset-2">
+        <br><br>
+        <!-- popular repos by stars -->
+        <canvas id="canvas3" style="width:100px; height:100px;"></canvas>
+        <br><br>
+        <!-- popular repos by watching -->
+        <canvas id="canvas4" width="100px" height="100px"> </canvas>
+        <br><br>
+      </div>
+    </div>
+  </div>
 </div>
+<br>
+<div *ngIf="reposDetails" class="container text-center doughnutChartsContainer" style="width: 98%;">
+  <!-- size of repositories -->
+      <canvas id="canvas2" width="700px" height="240px"> </canvas>
+</div>
+<br>
+
+<!-- for repositories -->
+<div *ngIf="repos">
+  <h3 style="display:inline-block">Public Repositories :</h3>
+  <div class="form-group" style="display:inline-block; margin-right:20px;">
+    <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
+  </div>
+</div>
+<div *ngIf="repos">
+  <div *ngFor="let repo of repos | search : repository_name" class="panel panel-info repository_list">
+    <div class="panel-heading">
+      <div class="panel-title">{{ repo.name }}</div>
+    </div>
+    <div class="panel-body">
+      <div>
+        <strong>Language:</strong>
+        <span *ngIf="repo.language">{{ repo.language }}</span>
+        <span *ngIf="!repo.language">Not initialized</span>    
+      </div>
+      <div>
+        <strong>Watchers:</strong>
+        <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
+        <span *ngIf="!repo.watchers">0</span>
+      </div>
+      <div>
+        <strong>Issues:</strong>
+        <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
+        <span *ngIf="!repo.open_issues">0</span>
+      </div>
+      <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons" style="float: right;">View</button></a>
+    </div>
+  </div>
+</div>
+
+<br>
+  
+<footer>
+  <div style="width:100%; color:white; background-color: rgb(36, 36, 36)">
+    <div class="row container">
+      <div class="col-md-1">
+        <img class="navbar-brand img-circle" style="height: 85px; padding-top: 30px;" src="../../../assets/imgs/gpalogo.png">
+      </div>
+      <div class="col-md-11">
+        <p style="padding-top: 20px; font-size: 30px;">GIT PROFILE VISUALIZER</p>
+        <p style="font-size: 16px;">The fastest and easiest way to analyze your GitHub Profiles</p>
+      </div>
+    </div>
+    <hr>
+    <p class=" text-center" style="padding-bottom: 15px; font-size: 10px">&copy; <span style="font-size: 13px">TK Pvt Ltd</span> Tharindu Wathukara</p>
+  </div>
+</footer>

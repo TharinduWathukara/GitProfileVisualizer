@@ -15,7 +15,7 @@ import { ProfileService } from './services/ProfileService';
 import { AuthenticationService } from './services/AuthenticationService';
 import { AuthGuard } from './services/AuthGuard';
 import { RepoComponent } from './components/repo/repo.component';
-import { RepoPipe } from './pipes/repo.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 const routes: Routes = [
@@ -56,7 +56,7 @@ const routes: Routes = [
     SignupComponent,
     ProfileComponent,
     RepoComponent,
-    RepoPipe
+    SearchPipe
   ],
   imports: [
     BrowserModule,

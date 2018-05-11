@@ -74,6 +74,7 @@ app.post('/getRepo',githubController.getRepo);
 app.post('/getRepoLanguages',githubController.getRepoLanguages);
 app.post('/getRepoStats',githubController.getRepoStats);
 app.post('/getCodeQuality',githubController.getCodeQuality);
+app.get('/getRepoCommits/:username',githubController.getRepoCommits);
 
 //mongodb
 app.post('/signUp',mongodbController.signUp);

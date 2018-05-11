@@ -25,6 +25,10 @@ export class ProfileService {
     return this.http.get('http://localhost:3000/getReposDetails/'.concat(username)).map(res=>res.json());
   }
 
+  getRepoCommits(username:string){
+    return this.http.get('http://localhost:3000/getRepoCommits/'.concat(username)).map(res=>res.json());
+  }
+
   getPopularLanguages(username:string){
     return this.http.get('http://localhost:3000/getPopularLanguages/'.concat(username)).map(res=>res.json());
   }
@@ -51,6 +55,14 @@ export class ProfileService {
       "name":name
     }
     return this.http.post('http://localhost:3000/getRepoStats',data,{withCredentials:true}).map(res=>res.json());
+  }
+
+  getCodeQuality(username:string,name:string){
+    let data = {
+      "username":username,
+      "name":name
+    }
+    return this.http.post('http://localhost:3000/getCodeQuality',data,{withCredentials:true}).map(res=>res.json());
   }
 
 }

@@ -1,85 +1,56 @@
 body {
     background: #F1F3FA;
-  }
-  
-  /* Profile container */
-  .profile {
-    margin: 20px 0;
-  }
-  
-  /* Profile sidebar */
-  .profile-sidebar {
-    background: #fff;
-  }
-  
-  .profile-userpic img {
-    float: none;
-    margin: 0 auto;
-    width: 70%;
-    height: 70%;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
-  }
-  
-  .profile-usertitle {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .profile-usertitle-name {
-    color: black;
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 7px;
-  }
-  
-  .profile-usertitle-login {
-    /* text-transform: uppercase; */
-    color: lightslategray;
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-  
-  .profile-userbuttons {
-    text-align: center;
-    margin-top: 10px;
-  }
-  
-  .profile-userbuttons .btn {
-    background: blue;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 6px 15px;
-    margin-right: 5px;
-  }
-  
-  .profile-userbuttons .btn:last-child {
-    margin-right: 0px;
-  }
-      
-  .profile-bio{
-      font-style: italic;
-      color: rgb(75, 80, 80);
-      font-family: cursive;
-  }
+}  
 
-table{
+
+.profile{
+  padding: 15px;
+  position: relative;
+  -moz-box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  background: white;
+}
+
+.profile:hover{
+  position: relative;
+  -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0,0.5);
+  -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, .5);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, .5);
+  padding: 10px;
+  background: white;
+}
+
+.profile-support-details{
+  position: relative;
+  -moz-box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  box-shadow: 1px 2px 4px rgba(108, 104, 104, 0.5);
+  background: white;
+}
+
+.profile-support-details:hover{
+  position: relative;
+  -moz-box-shadow: 2px 4px 6px rgba(0, 0, 0,0.5);
+  -webkit-box-shadow: 2px 4px 6px rgba(0, 0, 0, .5);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, .5);
+  background: white;
+}
+
+.img-responsive{
   width: 100%;
 }
 
-td{
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+.doughnutChartsContainer{
+  width:100%;
+  margin:0 auto;
+  
+  position: relative;
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0,0.5);
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  background: white;
 }
-
-tr:nth-child(even){background-color: #f2f2f2;}
-
-tr:hover {background-color: #ddd;}
-
-
 
 .repository_list{
   width: 240px;

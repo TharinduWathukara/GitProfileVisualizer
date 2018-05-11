@@ -73,7 +73,7 @@
         <div class="panel-body" style="padding:0;">
           <table class="panel-heading">
             <tr *ngIf="languages">
-              <td valign="top"><strong>Languages : </strong></td>
+              <td valign="top"><strong>Languages :</strong></td>
               <td>
                 <div *ngFor="let language of languages">
                   <p>{{ language }}</p>
@@ -81,7 +81,7 @@
               </td>
             </tr>
             <tr *ngIf="statistics.contributors">
-              <td valign="top"><strong>Contributors : </strong></td>
+              <td valign="top"><strong>Contributors:</strong></td>
               <td>
                 <div *ngFor="let contributor of statistics.contributors">
                   <p>{{ contributor }}</p>
@@ -90,6 +90,10 @@
             </tr>
           </table>
         </div>
+      </div>
+
+      <div class="text-center">
+          <button type="button" class="btn btn-primary btn-lg text-center" (click)="getCodeQuality()">Analyze your Code</button>
       </div>
       
 
@@ -103,7 +107,7 @@
     <!-- for statistics -->
     <canvas id="canvas1" width="400px" height="150px"> </canvas>
 
-    <div>
+    <div class="raw">
       <h3 style="padding-left:20px; padding-top:10px;">Contribution</h3>
 
       <div class="col-md-5 col-md-offset-1">
@@ -114,6 +118,55 @@
         <!-- for contribution by number of commits -->
         <canvas id="canvas3" width="100px" height="100px"> </canvas>        
       </div>
+      <div class="col-md-1"> </div>
+    </div>
+
+    <!-- this is for showing code analyzing results -->
+    
+    <div *ngIf="codeQuality" class="raw" style="display: inline-block;">
+      <br><br>
+      <h3 style="padding-left: 20px; padding-top: 10px;">Code Review</h3>
+      <div class="form-group" style="display:inline-block; margin-right:20px;">
+          <input class="form-control" type="text" [(ngModel)]="file_name" placeholder="Search by file name" style="width:250px;" autofocus/>
+        </div>
+      <div>
+        <div *ngFor="let file of codeQuality | search : file_name" class="container" style="margin:10px;background-color: rgb(249, 246, 241); padding-top: 10px; max-width: 900px;">
+          <div><span style="font-size: 20px; font-weight: bold">{{ file.name }} </span> ({{ file.size / 1000.0}}kB) - {{ file.path }}</div>
+          <div class="raw">
+            <div class="col-md-4">
+              <div style="margin:5px; padding: 15px; min-height: 150px; background-color:white">
+                <p class="text-center" style="font-size: 15px; font-weight: bold">Lines of Code</p>
+                <p><strong>Total : </strong>{{ file.total }}</p>
+                <p><strong>Source Lines : </strong>{{ file.source }}</p>
+                <p><strong>Empty Line : </strong>{{ file.empty }}<p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div style="margin:5px; padding: 15px;  min-height: 150px; background-color:white">
+                  <p class="text-center" style="font-size: 15px; font-weight: bold">Comments</p>
+                  <p><strong>Total : </strong>{{ file.comment }}</p>
+                  <p><strong>Single Line : </strong>{{ file.single }}</p>
+                  <p><strong>Block : </strong>{{ file.block }}<p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div style="margin:5px; padding: 15px;  min-height: 150px; background-color:white">
+                <p class="text-center" style="font-size: 15px; font-weight: bold">Code</p>
+                <p><strong>TODOs : </strong>{{ file.todo }}<p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+              <div style="margin:5px; padding: 15px; background-color:white">
+                <p class="text-center" style="font-size: 15px; font-weight: bold">Length of Code Lines</p>
+                <p><strong>Exceeded : </strong>{{ file.outLenghtLines }}<p>
+                <p><strong>Line Numbers : </strong>[{{ file.outLenghtLineNumbers }}]<p>
+              </div>
+            </div>
+          <br><br>
+        </div>
+      </div>
+
     </div>
 
   </div>

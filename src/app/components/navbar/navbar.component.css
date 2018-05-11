@@ -7,7 +7,7 @@
 }
 
 .navbar-header{
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 /* .navbar-brand{
@@ -23,6 +23,6 @@
 }
 
 #myNavbar{
-    padding-top: 25px;
+    padding-top: 20px;
     font-size: 17px;
 }

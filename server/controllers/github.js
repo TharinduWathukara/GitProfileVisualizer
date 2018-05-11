@@ -1,4 +1,5 @@
 const request = require('request');
+var sloc  = require('sloc');
 
 const {githubConfig} = require ('../config');
 
@@ -45,8 +46,8 @@ githubFunctions = {
                     sizeOfRepo.push(repos[i].size);
                 }
 
-                var loop=10;
-                if(repos.length<=10){
+                var loop=15;
+                if(repos.length<=loop){
                     loop=repos.length
                 }
                 var repoWatching = [];
@@ -108,8 +109,8 @@ githubFunctions = {
                         count.push(1);
                     }
                 }
-                var loop=10;
-                if(languages.length<=10){
+                var loop=15;
+                if(languages.length<=loop){
                     loop=languages.length
                 }
                 var newLanguages = [];
@@ -127,35 +128,66 @@ githubFunctions = {
                     'count':newcount
                 }
                 res.json(data);
-
-                // for(var i=0; i<repos.length;i++){
-                //     request.get(repos[i].languages_url + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
-                //     (err1,body1,response1) => {
-                //         if(err1) console.log(err1);
-                //         else{
-                //             var lang = JSON.parse(body1.body);
-                //             for (var key in lang){
-                //                 if(languages.includes(key)){
-                //                     var index = languages.indexOf(key);
-                //                     count[index]=count[index]+1;
-                //                 }
-                //                 else{
-                //                     languages.push(key);
-                //                     count.push(1);
-                //                 }
-                //             }
-                //         }
-                //     })
-                // }
-                // var data={
-                //     'languages':languages,
-                //     'count':count
-                // }
-                // res.json(data);
             }
         })
     },
 
+    // this function returns the number of commits in a repo
+    getRepoCommits:(req,res)=>{
+        request.get('https://api.github.com/users/' + req.params.username+ '/repos' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+        (err,body,response) => {
+            if(err) console.log(err);
+            else{
+                var repos = JSON.parse(body.body);
+                var data = {
+                    'repositories' : [],
+                    'commits' : []
+                }
+
+                for (var i=0;i<repos.length;i++){
+                    this.data = numOfCommits(data,repos,i);
+                }
+
+                function numOfCommits(data,repos,i){
+                    request.get('https://api.github.com/repos/' + req.params.username+ '/' + repos[i].name + '/commits' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+                    (err,body,response) => {
+                        if(err) console.log(err);
+                        else{
+                            var commit = JSON.parse(body.body);
+
+                            data.repositories.push(repos[i].name);
+                            data.commits.push(commit.length);
+
+                            if(i==repos.length-1){
+                                setTimeout(()=>{
+                                    var loop=15;
+                                    if(data.repositories.length<=loop){
+                                        loop=data.repositories.length
+                                    }
+                                    var newRepositories = [];
+                                    var newCommits = [];
+                                    for(var j=0;j<loop;j++){
+                                        var idx = data.commits.indexOf(Math.max.apply(null,data.commits));
+                                        newRepositories.push(data.repositories[idx]);
+                                        newCommits.push(data.commits[idx]);
+                                        data.commits[idx]=-1;
+                                    }
+
+                                    data.repositories = newRepositories;
+                                    data.commits = newCommits;
+
+                                    res.json(data);
+                                },500);
+                                // res.json(data);
+                            }else{
+                                return data;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    },
 
     //this function returns only one repo details
     getRepo:(req,res)=>{
@@ -308,7 +340,9 @@ githubFunctions = {
                                 data.contributorsByCommits = newConByCommits;
                                 data.contributionsByCommits = newCbtionByCommits;
 
-                                res.json(data);
+                                setTimeout(()=>{
+                                    res.json(data);
+                                },500);
                             }else{
                                 return data;
                             }
@@ -366,12 +400,11 @@ githubFunctions = {
     //this function return the code quality of the user
     getCodeQuality:(req,res)=>{
 
-        request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/contents' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
+        request.get('https://api.github.com/repos/' + req.body.username + '/' + req.body.name + '/contents' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
         (err,body,response) => {
             if(err) console.log(err);
             else{
                 var content = JSON.parse(body.body);
-                // res.json(content);
                 var data = {
                     files:[]
                 };
@@ -390,9 +423,6 @@ githubFunctions = {
                 }, function(err) {
                     console.log("getFiles failed");
                 });
-
-                
-
                 
                 function getFiles(content,data){
                     for(var i=0;i<content.length;i++){
@@ -427,11 +457,25 @@ githubFunctions = {
                         if(err) throw err;
                         else{
                             var content = (body.body);
-                            linelength(data,i,content);
-                            
+                            checkLineLength(content,data,i);
+
+                            var name = data.files[i].name.split('.');
+                            var ext = getExtension(name[name.length-1]);
+                            var stats = sloc(content,ext);
+                            setTimeout(()=>{
+                                data.files[i].total = stats['total'];
+                                data.files[i].source = stats['source'];
+                                data.files[i].comment = stats['comment'];
+                                data.files[i].single = stats['single'];
+                                data.files[i].block = stats['block'];
+                                data.files[i].empty = stats['empty'];
+                                data.files[i].todo = stats['todo'];
+                            },80);
                             
                             if (i == data.files.length-1){
-                                res.json(data);
+                                setTimeout(()=>{
+                                    res.json(data);
+                                },1000);
                             }else{
                                 return data;
                             }
@@ -439,27 +483,43 @@ githubFunctions = {
                     });
                 }
 
-                function linelength(data,i,content){
-                    var contentByLines = content.split("\n");
-                    var numOfLines = 0;
-                    var linesMoreLength = 0;
+                function getExtension(name){
+                    var validExtensions=["cr", "py", "ls", "mochi", "nix", "r", "rb", "jl",
+                    "pl", "yaml", "hr","js", "jsx", "c", "cc", "cpp", "cs", "cxx", "h", "m",
+                    "mm", "hpp","hx", "hxx", "ino", "java", "php", "php5", "go", "groovy",
+                    "scss", "less", "rs", "sass", "styl", "scala", "swift", "ts", "jade", "gs",
+                    "nut", "kt", "kts", "tsx", "fs", "fsi", "fsx", "bsl","latex", "tex", "sty",
+                    "cls","lua", "hs","erl","brs", "monkey", "vb","nim","rkt", "clj",
+                    "cljs", "hy", "asm"];
 
-                    for(var m=0;m<contentByLines.length;m++){
-                        if(contentByLines[m]>150){
-                            linesMoreLength++;
-                        }
-                        numOfLines++;
+                    var invalid=["sql"];
 
-                        data.files[i].numOfLines = numOfLines;
-                        data.files[i].linesMoreLength = linesMoreLength;
-                        
+                    if(validExtensions.includes(name)){
+                        return name;
+                    }else{
+                        return 'coffee';
                     }
+                }
+
+                function checkLineLength(content,data,i){
+                    var outLength = 0;
+                    var outLenghtLineNumbers = [];
+                    var contentByLine = content.split('\n');
+                    for (var j =0;j<contentByLine.length;j++){
+                        if(contentByLine[j].length > 140){
+                            outLength++;
+                            outLenghtLineNumbers.push(j+1);
+                        }
+                        data.files[i].outLenghtLines = outLength;
+                        data.files[i].outLenghtLineNumbers = outLenghtLineNumbers;
+                    }
+
                 }
 
                 function checkFile(content){
                     var list = ['.json','config','gitignore','README','conf','test','gradle','.pro',
                                 '.xml','.mf','.jar','.db','.jpg','.png','.jpeg','.txt','.md','properties',
-                                '.form','.ico','.woff2','.iml'];
+                                '.form','.ico','.woff2','.iml','bootstrap','jquery','glyphicons'];
 
                     for(var j=0;j<list.length;j++){
                         if(content.name.includes(list[j])){
@@ -470,7 +530,7 @@ githubFunctions = {
                 }
 
                 function checkDir(content){
-                    var list = ['node_modules','dist','build','test',];
+                    var list = ['node_modules','dist','build','test','bootstrap'];
 
                     for(var j=0;j<list.length;j++){
                         if(content.name.includes(list[j])){
@@ -481,146 +541,7 @@ githubFunctions = {
                 }
             }
         });
-        
-        // request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits' + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
-        // (err,body,response) => {
-        //     if(err) console.log(err);
-        //     else{
-        //         data={
-        //             "username":req.body.username,
-        //             "name":req.body.name,
-        //             "filenames":[],
-        //             "files":[]
-        //         }
-        //         var commits = JSON.parse(body.body);
-        //         // data.commits = commits;
-
-        //         for(var i=0;i<commits.length;i++){
-        //             if(data.username == commits[i].commit.author.name){
-        //                 this.data = getCommit(data,i);
-        //             }
-
-        //             if(data.files.length > 20){
-        //                 break;
-        //             }
-        //         }
-
-        //         function getCommit(data,i){
-        //             request.get('https://api.github.com/repos/'+req.body.username+'/' + req.body.name + '/commits/' + commits[i].sha + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
-        //             (err,body,response) =>{
-        //                 if(err) console.log(err);
-        //                 else{
-
-        //                     var commit = JSON.parse(body.body);
-
-        //                     for(var j=0;j<commit.files.length;j++){
-
-        //                         if(commit.files[j].status != 'removed'){
-
-        //                             if(!ckeckLanguageAgain(commit.files[j].filename,data.filenames)){
-
-        //                                 if(checkLanguage(commit.files[j].filename) 
-        //                                 && !commit.files[j].filename.includes('bootstrap') 
-        //                                 && !commit.files[j].filename.includes('jquery')
-        //                                 && !commit.files[j].filename.includes('node_modules')
-        //                                 && !commit.files[j].filename.includes('.json')){
-
-        //                                     data.filenames.push(commit.files[j].filename);
-
-        //                                     var file = {
-        //                                         filename : commit.files[j].filename,
-        //                                         raw_url : commit.files[j].raw_url
-        //                                     }
-
-        //                                     data.files.push(file);
-        //                                     if(data.files.length > 20){
-        //                                         break;
-        //                                     }
-        //                                 }
-        //                             }
-        //                         }
-                                
-        //                     }
-
-
-        //                     if (i == commits.length-1){
-        //                         console.log('getCommit pass');
-        //                         console.log(data.filenames);
-
-        //                         for(var l=0;l<data.files.length;l++){
-        //                             this.data = getFiles(data,l);
-        //                         }
-
-        //                     }else{
-        //                         return data;
-        //                     }
-        //                 }
-        //             });
-        //         }
-                
-        //         //this function return the lines with more than 150col (this error reduce the code readability)
-        //         function getFiles(data,l){
-        //             request.get(data.files[l].raw_url + '?client_id=' + githubConfig.client_id + '&client_secret=' + githubConfig.client_secret, {headers: {'User-Agent':'GIT Profile Visualizer'}},
-        //             (err,body,response) =>{
-        //                 if(err) console.log(err);
-        //                 else{
-        //                     var text = JSON.parse(body.body);
-        //                     var textByLine = text.split("\n");
-        //                     var numOfLines = 0;
-        //                     var linesMoreLength = 0;
-        //                     for(var m=0;m<textByLine.length;m++){
-        //                         if(textByLine[m]>150){
-        //                             linesMoreLength++;
-        //                         }
-        //                         numOfLines++;
-
-        //                         data.files[l].numOfLines = numOfLines;
-        //                         data.files[l].linesMoreLength = linesMoreLength;
-                                
-        //                     }
-
-
-        //                     if (l == data.files.length-1){
-        //                         console.log('getFile pass');
-
-        //                         res.json(data);
-                                
-        //                     }else{
-        //                         return data;
-        //                     }
-        //                 }
-        //             });
-        //         }
-
-        //         function checkLanguage(filename){
-        //             let validExtensions = ['.java','.js','.php','.ts','.c','.cpp','.html','.py','.cs','.rb'];
-                    
-        //             for(var k=0;k<validExtensions.length;k++){
-        //                 if(filename.includes(validExtensions[k])){
-        //                     return true;
-        //                 }
-        //             }
-
-        //             return false;
-        //         }
-
-        //         function ckeckLanguageAgain(filename,filenames){
-        //             for(var k=0;k<filenames.length;k++){
-        //                 if(filename.includes(filenames[k]) || filenames[k].includes(filename)){
-        //                     return true;
-        //                 }
-        //             }
-        //             return false;
-        //         }
-        //     }
-        // });
     }
-
-
 }
-
-
-
-
 
 module.exports = githubFunctions;

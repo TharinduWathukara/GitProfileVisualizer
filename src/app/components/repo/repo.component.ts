@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/ProfileService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/AuthenticationService';
+import { SearchPipe } from '../../pipes/search.pipe';
 import * as Chart from 'chart.js';
 
 @Component({
@@ -14,6 +15,10 @@ export class RepoComponent implements OnInit {
   private languages:any[];
   private statistics:any[];
   private username:string;
+  private codeQuality:any[];
+
+  private file_name:string;
+
 
   //charts
   private chart1:any;  //for statistics
@@ -39,6 +44,14 @@ export class RepoComponent implements OnInit {
         this.router.navigate(['signIn']);
       });
     }
+  }
+
+
+  getCodeQuality(){
+    this.profileService.getCodeQuality(this.username,this.route.snapshot.params['name']).subscribe(data =>{
+      this.codeQuality = data.files;
+      console.log(data);
+    });
   }
 
   getRepoDetails(){
@@ -223,4 +236,5 @@ export class RepoComponent implements OnInit {
       });
     })
   }
+
 }
