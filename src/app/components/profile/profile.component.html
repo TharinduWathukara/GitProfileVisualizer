@@ -1,191 +1,5 @@
 <app-navbar></app-navbar>
 <br>
-<!-- <div *ngIf="profile">
-  <div class="col-md-3"> -->
-    <!-- <div class="panel panel-default">
-      <img src="{{ profile.avatar_url }}" width="100%">
-      <div class="panel-heading">
-        <div class="panel-title">{{ profile.name }}</div>
-      </div>
-    </div> -->
-<!-- 
-    <div class="profile-sidebar"> -->
-      <!-- SIDEBAR USERPIC -->
-      <!-- <div class="profile-userpic">
-        <img src="{{ profile.avatar_url }}" class="img-responsive" alt="">
-      </div> -->
-      <!-- END SIDEBAR USERPIC -->
-      <!-- SIDEBAR USER TITLE -->
-      <!-- <div class="profile-usertitle">
-        <div class="profile-usertitle-name">
-          {{ profile.name }}
-        </div>
-        <div class="profile-usertitle-login">
-          {{ profile.login }}
-        </div>
-      </div>
-      
-      <div *ngIf="profile.bio" class="text-center profile-bio"> "{{ profile.bio }}" </div> -->
-
-      <!-- END SIDEBAR USER TITLE -->
-      <!-- SIDEBAR BUTTONS -->
-      <!-- <div class="profile-userbuttons">
-        <a href="{{ profile.html_url }}" target="_blank"><button type="button" class="btn btn-success btn-sm">Show Profile</button></a>
-      </div> -->
-      <!-- END SIDEBAR BUTTONS -->
-      <!-- <br>
-      
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="panel-title">Profile Details</div>
-        </div>
-        <div class="panel-body" style="padding:0;">
-          <table>
-            <tr><td>
-              <strong>Email:</strong>
-              <p *ngIf="profile.email">{{ profile.email }}</p>
-              <p *ngIf="!profile.email">Not initialized</p>
-            </td></tr>
-
-            <tr><td>
-              <strong>Blog:</strong>
-              <p *ngIf="profile.blog">{{ profile.blog }}</p>
-              <p *ngIf="!profile.blog">Not initialized</p>
-            </td></tr>
-
-            <tr><td>
-              <strong>Company:</strong>
-              <p *ngIf="profile.company">{{ profile.company }}</p>
-              <p *ngIf="!profile.company">Not initialized</p>
-            </td></tr>
-
-            <tr><td>
-              <strong>Location:</strong>
-              <p *ngIf="profile.location">{{ profile.location }}</p>
-              <p *ngIf="!profile.location">Not initialized</p>
-            </td></tr>
-
-            <tr><td>
-              <strong *ngIf="profile.hireable">Hireable</strong>
-              <strong *ngIf="!profile.hireable">Not Hireable</strong>
-            </td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="panel panel-warning">
-        <div class="panel-body" style="padding:0;">
-          <table>
-            <tr>
-              <td>
-                <strong>Public Repositories</strong>
-              </td>
-              <td>
-                <span *ngIf="profile.public_repos">: {{ profile.public_repos }}</span>
-                <span *ngIf="!profile.public_repos">: 0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Public Gists</strong>
-              </td>
-              <td>
-                <span *ngIf="profile.public_gists">: {{ profile.public_gists }}</span>
-                <span *ngIf="!profile.public_gists">: 0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Followers</strong>
-              </td>
-              <td>
-                <span *ngIf="profile.followers">: {{ profile.followers }}</span>
-                <span *ngIf="!profile.followers">: 0</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <strong>Followings</strong>
-              </td>
-              <td>
-                <span *ngIf="profile.following">: {{ profile.following }}</span>
-                <span *ngIf="!profile.following">: 0</span>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      
-
-      
-
-
-    </div>
-  </div>
-  <div class="col-md-9">
-    <div>
-      <div class="col-md-4"> -->
-        <!-- popular languages -->
-        <!-- <canvas id="canvas1" style="width:100px; height:100px;"></canvas>
-      </div>
-  
-  
-      <div class="col-md-4"> -->
-        <!-- popular repos by stars -->
-        <!-- <canvas id="canvas3" style="width:100px; height:100px;"></canvas>
-      </div>
-  
-      <div class="col-md-4"> -->
-        <!-- popular repos by watching -->
-        <!-- <canvas id="canvas4" width="100px" height="100px"> </canvas>
-      </div>
-    </div>
-    
-
-    <div> -->
-      <!-- size of repositories -->
-      <!-- <canvas id="canvas2" width="400px" height="250px"> </canvas>
-    </div>
-
-    <div> -->
-      <!-- for repositories -->
-      <!-- <h3 style="display:inline-block">Public Repositories :</h3>
-
-      <div class="form-group" style="display:inline-block; margin-right:20px;">
-        <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
-      </div>
-
-      
-      <div *ngIf="repos">
-        <div *ngFor="let repo of repos | search : repository_name" class="panel panel-info repository_list">
-          <div class="panel-heading">
-            <div class="panel-title">{{ repo.name }}</div>
-          </div>
-          <div class="panel-body">
-            <div>
-              <strong>Language:</strong>
-              <span *ngIf="repo.language">{{ repo.language }}</span>
-              <span *ngIf="!repo.language">Not initialized</span>    
-            </div>
-            <div>
-              <strong>Watchers:</strong>
-              <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
-              <span *ngIf="!repo.watchers">0</span>
-            </div>
-            <div>
-              <strong>Issues:</strong>
-              <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
-              <span *ngIf="!repo.open_issues">0</span>
-            </div>
-            <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons" style="float: right;">View</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
 <div *ngIf="profile" class="row container" style="width: 100%; margin: 0 auto;">
   <div class="col-md-5">
     <div class="row">
@@ -301,6 +115,24 @@
             <p style="font-size: 16px;">{{ profile.company }}</p>
           </td>
         </tr>
+        <tr *ngIf="profile.created_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/calendar.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Created at</p>
+            <p style="font-size: 16px;">{{ profile.created_at }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.updated_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/news.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Last Updated at</p>
+            <p style="font-size: 16px;">{{ profile.updated_at }}</p>
+          </td>
+        </tr>
         <tr>
           <td style="width: 60px; text-align: center">
             <img src="../../../assets/imgs/svg/debt.svg" style="width:50px;" alt="Repositories">
@@ -354,34 +186,103 @@
 <br>
 
 <!-- for repositories -->
-<div *ngIf="repos">
-  <h3 style="display:inline-block">Public Repositories :</h3>
-  <div class="form-group" style="display:inline-block; margin-right:20px;">
-    <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
-  </div>
-</div>
-<div *ngIf="repos">
-  <div *ngFor="let repo of repos | search : repository_name" class="panel panel-info repository_list">
-    <div class="panel-heading">
-      <div class="panel-title">{{ repo.name }}</div>
+<div *ngIf="repos" class="container doughnutChartsContainer" style="width: 98%;">
+  <div>
+    <p class="text-center" style="color:black; font-size: 30px;">Public Repositories</p>
+    <div class="form-group" style="margin-right:20px;">
+      <label>Search Repositories by Name : </label>
+      <input class="form-control" type="text" [(ngModel)]="repository_name" placeholder="Search by repo name" style="width:250px;" autofocus/>
     </div>
-    <div class="panel-body">
-      <div>
-        <strong>Language:</strong>
-        <span *ngIf="repo.language">{{ repo.language }}</span>
-        <span *ngIf="!repo.language">Not initialized</span>    
+  </div>
+  <div>
+    <div *ngFor="let repo of repos | search : repository_name" class="container profile-support-details" style="width:96%; margin-bottom: 15px; border: 1px solid darkgray;">
+      <p class="text-center" style="font-size: 20px; margin-top: 20px;">{{ repo.name }} <span style="font-size: 15px;" *ngIf="repo.language">({{ repo.language }})</span></p>
+      <hr>
+      <div class="row continer" style="width: 100%">
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td>
+                <img src="../../../assets/imgs/svg/database.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Size</p>
+                <p>{{ repo.size }} kB</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td>
+                <img src="../../../assets/imgs/svg/rating.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Stars</p>
+                <p *ngIf="repo.stargazers_count">{{ repo.stargazers_count }}</p>
+                <p *ngIf="!repo.stargazers_count">0</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td>
+                <img src="../../../assets/imgs/svg/conference_call.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Watchers</p>
+                <p *ngIf="repo.watchers">{{ repo.watchers }}</p>
+                <p *ngIf="!repo.watchers">0</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td class="text-center">
+                <img src="../../../assets/imgs/svg/answers.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Issues</p>
+                <p *ngIf="repo.open_issues">{{ repo.open_issues }}</p>
+                <p *ngIf="!repo.open_issues">0</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td class="text-center">
+                <img src="../../../assets/imgs/svg/calendar.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Created at</p>
+                <p *ngIf="repo.created_at">{{ repo.created_at }}</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-2">
+          <table>
+            <tr>
+              <td class="text-center">
+                <img src="../../../assets/imgs/svg/calendar.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Last Pushed at</p>
+                <p *ngIf="repo.pushed_at">{{ repo.pushed_at }}</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <a href="{{ repo.html_url }}" target="_blank"><button class="btn btn-info" style="float: left; border-radius: 0; margin-left: 20px; margin-bottom: 10px">View on GitHub</button></a>
+        <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success" style="float: right; border-radius: 0; margin-bottom: 10px;">Analyze</button></a>
       </div>
-      <div>
-        <strong>Watchers:</strong>
-        <span *ngIf="repo.watchers">{{ repo.watchers }}</span>
-        <span *ngIf="!repo.watchers">0</span>
-      </div>
-      <div>
-        <strong>Issues:</strong>
-        <span *ngIf="repo.open_issues">{{ repo.open_issues }}</span>
-        <span *ngIf="!repo.open_issues">0</span>
-      </div>
-      <a [routerLink]="['/repos',repo.name]" ><button class="btn btn-success profile-userbuttons" style="float: right;">View</button></a>
     </div>
   </div>
 </div>

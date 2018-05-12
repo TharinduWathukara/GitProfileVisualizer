@@ -147,6 +147,24 @@
             <p style="font-size: 16px;">{{ profile.company }}</p>
           </td>
         </tr>
+        <tr *ngIf="profile.created_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/calendar.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Created at</p>
+            <p style="font-size: 16px;">{{ profile.created_at }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="profile.updated_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/news.svg" style="width:50px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 20px; font-weight: bold;">Last Updated at</p>
+            <p style="font-size: 16px;">{{ profile.updated_at }}</p>
+          </td>
+        </tr>
         <tr>
           <td style="width: 60px; text-align: center">
             <img src="../../../assets/imgs/svg/debt.svg" style="width:50px;" alt="Repositories">

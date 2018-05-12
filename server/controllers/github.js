@@ -11,7 +11,20 @@ githubFunctions = {
         (err,body,response) => {
             if(err) console.log(err);
             else{
-                res.json(JSON.parse(body.body));
+                var user = JSON.parse(body.body);
+                user.created_at = convertDate(user.created_at);
+                user.updated_at = convertDate(user.updated_at);
+
+                res.json(user);
+
+                function convertDate(date){
+                    var month = ["January","Febuary","March","April","May","June","July","Auguest","September","Octomber" ,"November","December"];
+                    var d = new Date(date);
+                    var newDate = month[d.getMonth()] + ' ' + d.getDate().toString() + ', ' + d.getFullYear().toString();
+                    return newDate;
+
+                }
+
             }
         })
     },
@@ -22,7 +35,22 @@ githubFunctions = {
         (err,body,response) => {
             if(err) console.log(err);
             else{
-                res.json(JSON.parse(body.body));
+                var repos = JSON.parse(body.body);
+
+                for(var i=0;i<repos.length;i++){
+                    repos[i].created_at = convertDate(repos[i].created_at);
+                    repos[i].pushed_at = convertDate(repos[i].pushed_at);
+                }
+
+                res.json(repos);
+
+                function convertDate(date){
+                    var month = ["January","Febuary","March","April","May","June","July","Auguest","September","Octomber" ,"November","December"];
+                    var d = new Date(date);
+                    var newDate = month[d.getMonth()] + ' ' + d.getDate().toString() + ', ' + d.getFullYear().toString();
+                    return newDate;
+
+                }
             }
         })
     },
@@ -195,7 +223,21 @@ githubFunctions = {
         (err,body,response) => {
             if(err) console.log(err);
             else{
-                res.json(JSON.parse(body.body));
+                var repo = JSON.parse(body.body);
+
+                repo.created_at = convertDate(repo.created_at);
+                repo.updated_at = convertDate(repo.updated_at);
+                repo.pushed_at = convertDate(repo.pushed_at);
+
+                res.json(repo);
+
+                function convertDate(date){
+                    var month = ["January","Febuary","March","April","May","June","July","Auguest","September","Octomber" ,"November","December"];
+                    var d = new Date(date);
+                    var newDate = month[d.getMonth()] + ' ' + d.getDate().toString() + ', ' + d.getFullYear().toString();
+                    return newDate;
+
+                }
             }
         });
     },

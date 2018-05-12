@@ -1,51 +1,6 @@
 <app-navbar></app-navbar>
 <br>
-<div *ngIf="repo">
-  <div class="col-md-3">
-    <div class="profile-sidebar">
-      <!-- SIDEBAR USER TITLE -->
-      <div class="profile-usertitle">
-        <div class="profile-usertitle-name">
-          {{ repo.name }}
-        </div>
-        <div class="profile-usertitle-login">
-          {{ repo.full_name }}
-          (<strong *ngIf="repo.private">Private</strong><strong *ngIf="!repo.private">Public</strong>)
-        </div>
-      </div>
-      
-      <div *ngIf="repo.description" class="text-center profile-bio"> "{{ repo.description }}" </div>
-
-      <!-- END SIDEBAR USER TITLE -->
-      <!-- SIDEBAR BUTTONS -->
-      <div class="profile-userbuttons">
-        <a href="{{ repo.html_url }}" target="_blank"><button type="button" class="btn btn-success btn-sm">View on GitHub</button></a>
-      </div>
-      <!-- END SIDEBAR BUTTONS -->
-      <br>
-      
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="panel-title">Repository Details</div>
-        </div>
-        <div class="panel-body" style="padding:0;">
-          <table>
-            <tr>
-              <td><strong>Main Language</strong></td>
-              <td>
-                <span *ngIf="repo.language">: {{ repo.language }}</span>
-                <span *ngIf="!repo.language">: Not initialized</span> 
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Default Branch </strong></td>
-              <td><span>: {{ repo.default_branch }}</span></td>
-            </tr>
-            <tr>
-              <td><strong>Size </strong></td>
-              <td><span>: {{ repo.size }} KB</span></td>
-            </tr>
-            <tr>
+<!--        <tr>
               <td><strong>No of stars </strong></td>
               <td><span>: {{ repo.stargazers_count }}</span></td>
             </tr>
@@ -95,35 +50,31 @@
       <div class="text-center">
           <button type="button" class="btn btn-primary btn-lg text-center" (click)="getCodeQuality()">Analyze your Code</button>
       </div>
-      
-
-      
-
 
     </div>
   </div>
   <div class="col-md-9">
-
+ -->
     <!-- for statistics -->
-    <canvas id="canvas1" width="400px" height="150px"> </canvas>
+    <!-- <canvas id="canvas1" width="400px" height="150px"> </canvas>
 
     <div class="raw">
       <h3 style="padding-left:20px; padding-top:10px;">Contribution</h3>
 
-      <div class="col-md-5 col-md-offset-1">
+      <div class="col-md-5 col-md-offset-1"> -->
         <!-- for contribution by statistics -->
-        <canvas id="canvas2" width="100px" height="100px"> </canvas>        
+        <!-- <canvas id="canvas2" width="100px" height="100px"> </canvas>        
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5"> -->
         <!-- for contribution by number of commits -->
-        <canvas id="canvas3" width="100px" height="100px"> </canvas>        
+        <!-- <canvas id="canvas3" width="100px" height="100px"> </canvas>        
       </div>
       <div class="col-md-1"> </div>
     </div>
-
+ -->
     <!-- this is for showing code analyzing results -->
     
-    <div *ngIf="codeQuality" class="raw" style="display: inline-block;">
+    <!-- <div *ngIf="codeQuality" class="raw" style="display: inline-block;">
       <br><br>
       <h3 style="padding-left: 20px; padding-top: 10px;">Code Review</h3>
       <div class="form-group" style="display:inline-block; margin-right:20px;">
@@ -166,8 +117,221 @@
           <br><br>
         </div>
       </div>
+    </div>
+  </div>
+</div> -->
 
+
+<div *ngIf="repo" class="row container" style="width: 100%; margin: 0 auto;">
+  <div class="col-md-4">
+    <div class="profile container" style="width: 100%; margin-bottom: 20px;">
+        <p style="font-size: 35px; text-align: center; color:darkslategray;">{{ repo.name }}</p>
+        <a href="{{ repo.html_url }}" target="_blank"><button type="button" style="border-radius: 0;" class="btn btn-success center-block btn-lg">Show Repository</button></a>
+    </div>
+    <div class="profile-support-details">
+      <p class="text-center" style="color:black; font-size: 25px;">Repository Details</p>
+      <hr>
+      <table>
+        <tr>
+          <td style="width: 60; text-align: center;">
+            <img src="../../../assets/imgs/svg/approval.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Full name</p>
+            <p style="font-size: 12px;">{{ repo.full_name }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.description">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/info.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Description</p>
+            <p style="font-size: 12px;">{{ repo.description }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.language">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/document.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Main Language</p>
+            <p style="font-size: 12x;">{{ repo.language }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.default_branch">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/share.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Default Branch</p>
+            <p style="font-size: 12px;">{{ repo.default_branch }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.created_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/calendar.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Created at</p>
+            <p style="font-size: 12px;">{{ repo.created_at }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.updated_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/news.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Last Updated at</p>
+            <p style="font-size: 12px;">{{ repo.updated_at }}</p>
+          </td>
+        </tr>
+        <tr *ngIf="repo.pushed_at">
+          <td style="width: 60px; text-align: center">
+            <img src="../../../assets/imgs/svg/planner.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Last Pushed at</p>
+            <p style="font-size: 12px;">{{ repo.pushed_at }}</p>
+          </td>
+        </tr>
+        <hr>
+        <tr *ngIf="languages">
+          <td style="width: 60px; text-align: center" valign="top">
+            <img src="../../../assets/imgs/svg/ratings.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Other Languages</p>
+            <div *ngFor="let language of languages" style="font-size: 12px;">
+              <p>{{ language }}</p>
+            </div>
+          </td>
+        </tr>
+        <hr>
+        <tr *ngIf="statistics.contributors">
+          <td style="width: 60px; text-align: center" valign="top">
+            <img src="../../../assets/imgs/svg/conference_call.svg" style="width:40px;" alt="Repositories">
+          </td>
+          <td>
+            <p style="font-size: 16px; font-weight: bold;">Contributors</p>
+            <div *ngFor="let contributor of statistics.contributors" style="font-size: 12px;">
+              <p>{{ contributor }}</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <br>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="row continer doughnutChartsContainer" style="width: 100%">
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td valign="top">
+              <img src="../../../assets/imgs/svg/database.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Size(kB)</p>
+              <p>{{ repo.size }}</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td>
+              <img src="../../../assets/imgs/svg/rating.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Stars</p>
+              <p *ngIf="repo.stargazers_count">{{ repo.stargazers_count }}</p>
+              <p *ngIf="!repo.stargazers_count">0</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td>
+              <img src="../../../assets/imgs/svg/conference_call.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Watchers</p>
+              <p *ngIf="repo.watchers">{{ repo.watchers_count }}</p>
+              <p *ngIf="!repo.watchers_count">0</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td class="text-center">
+              <img src="../../../assets/imgs/svg/answers.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Issues</p>
+              <p *ngIf="repo.open_issues">{{ repo.open_issues }}</p>
+              <p *ngIf="!repo.open_issues">0</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td class="text-center">
+              <img src="../../../assets/imgs/svg/voice_presentation.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Subscribers</p>
+              <p *ngIf="repo.subscribers_count">{{ repo.subscribers_count }}</p>
+              <p *ngIf="!repo.subscribers_count">0</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <table>
+          <tr>
+            <td class="text-center">
+              <img src="../../../assets/imgs/svg/bullish.svg" style="width:50px;" alt="Repositories">
+            </td>
+            <td style="padding-left: 10px;">
+              <p style="font-size: 15px; font-weight: bold;">Forks</p>
+              <p *ngIf="repo.forks_count">{{ repo.forks_count }}</p>
+              <p *ngIf="!repo.forks_count">0</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="statistics" class="container doughnutChartsContainer" style="width: 100%; margin-top: 15px;">
+      <!-- for statistics -->
+      <canvas id="canvas1" width="400px" height="150px"> </canvas>
+    </div>
+    <div *ngIf="statistics" class="container doughnutChartsContainer row" style="width: 100%; margin-top: 15px;">
+      <p class="text-center" style="color:black; font-size: 30px;">Contribution</p>
+
+      <div class="col-md-4 col-md-offset-1">
+        <br><br>
+        <!-- for contribution by statistics -->
+        <canvas id="canvas2" width="100px" height="100px"> </canvas>
+        <br><br>
+      </div>
+      <div class="col-md-4 col-md-offset-2">
+        <br><br>
+        <!-- for contribution by number of commits -->
+        <canvas id="canvas3" width="100px" height="100px"> </canvas>
+        <br><br>
+      </div>
     </div>
 
+    <div class="container text-center" style="width: 100%; margin-top: 15px;">
+      <button type="button" class="btn btn-success btn-lg text-center" style="border-radius: 0;" (click)="getCodeQuality()">Analyze My Code</button>
+    </div>
   </div>
 </div>

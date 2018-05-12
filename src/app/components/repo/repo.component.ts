@@ -169,7 +169,7 @@ export class RepoComponent implements OnInit {
             responsive: true,
             legend: {
               position: 'top',
-              // display:false,
+              display:false,
               labels:{
                 usePointStyle:true,
                 padding:5,
@@ -215,7 +215,7 @@ export class RepoComponent implements OnInit {
             responsive: true,
             legend: {
               position: 'top',
-              // display:false,
+              display:false,
               labels:{
                 usePointStyle:true,
                 padding:5,
