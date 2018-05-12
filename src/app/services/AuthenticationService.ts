@@ -23,7 +23,7 @@ export class AuthenticationService implements OnInit {
       "passwordConf":passwordConf
     }
 
-    return this.http.post('http://localhost:3000/signUp', user,{withCredentials: true}).map(res=>res.json());
+    return this.http.post('/signUp', user,{withCredentials: true}).map(res=>res.json());
   }
 
 
@@ -33,15 +33,15 @@ export class AuthenticationService implements OnInit {
       "logemail":email,
       "logpassword":password
     }
-    return this.http.post('http://localhost:3000/signIn', user,{withCredentials: true}).map(res => res.json());
+    return this.http.post('/signIn', user,{withCredentials: true}).map(res => res.json());
   }
 
   signOut(){
-    return this.http.get('http://localhost:3000/signOut',{withCredentials: true}).map(res => res.json());
+    return this.http.get('/signOut',{withCredentials: true}).map(res => res.json());
   }
 
   getProfile(){
-    return this.http.get('http://localhost:3000/profile',{withCredentials: true}).map(res => res.json()); 
+    return this.http.get('/profile',{withCredentials: true}).map(res => res.json()); 
   }
 
   setSignIn(username){

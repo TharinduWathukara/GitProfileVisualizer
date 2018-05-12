@@ -10,11 +10,11 @@ export class ProfileService {
   }
 
   getGitHubuserProfileInfo(username: string){
-    return this.http.get('http://localhost:3000/getgithubuser/'.concat(username)).map(res => res.json());
+    return this.http.get('/getgithubuser/'.concat(username)).map(res => res.json());
   }
 
   getGitRepositories(username:string){
-    return this.http.get('http://localhost:3000/getrepositories/'.concat(username)).map(res=>res.json());
+    return this.http.get('/getrepositories/'.concat(username)).map(res=>res.json());
   }
 
   // getUsername(){
@@ -22,15 +22,15 @@ export class ProfileService {
   // }
 
   getReposDetails(username:string){
-    return this.http.get('http://localhost:3000/getReposDetails/'.concat(username)).map(res=>res.json());
+    return this.http.get('/getReposDetails/'.concat(username)).map(res=>res.json());
   }
 
   getRepoCommits(username:string){
-    return this.http.get('http://localhost:3000/getRepoCommits/'.concat(username)).map(res=>res.json());
+    return this.http.get('/getRepoCommits/'.concat(username)).map(res=>res.json());
   }
 
   getPopularLanguages(username:string){
-    return this.http.get('http://localhost:3000/getPopularLanguages/'.concat(username)).map(res=>res.json());
+    return this.http.get('/getPopularLanguages/'.concat(username)).map(res=>res.json());
   }
 
   getRepo(username:string,name:string){
@@ -38,7 +38,7 @@ export class ProfileService {
       "username":username,
       "name":name
     }
-    return this.http.post('http://localhost:3000/getRepo',data,{withCredentials: true}).map(res=>res.json());
+    return this.http.post('/getRepo',data,{withCredentials: true}).map(res=>res.json());
   }
   
   getRepoLanguages(username:string,name:string){
@@ -46,7 +46,7 @@ export class ProfileService {
       "username":username,
       "name":name
     }
-    return this.http.post('http://localhost:3000/getRepoLanguages',data,{withCredentials: true}).map(res=>res.json());
+    return this.http.post('/getRepoLanguages',data,{withCredentials: true}).map(res=>res.json());
   }
 
   getRepoStatistics(username:string,name:string){
@@ -54,7 +54,7 @@ export class ProfileService {
       "username":username,
       "name":name
     }
-    return this.http.post('http://localhost:3000/getRepoStats',data,{withCredentials:true}).map(res=>res.json());
+    return this.http.post('/getRepoStats',data,{withCredentials:true}).map(res=>res.json());
   }
 
   getCodeQuality(username:string,name:string){
@@ -62,7 +62,7 @@ export class ProfileService {
       "username":username,
       "name":name
     }
-    return this.http.post('http://localhost:3000/getCodeQuality',data,{withCredentials:true}).map(res=>res.json());
+    return this.http.post('/getCodeQuality',data,{withCredentials:true}).map(res=>res.json());
   }
 
 }

@@ -6,27 +6,28 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 var User = require('./mongodb/userschema');
-const PORT = 3000;
+// const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 //connect to mongodb
 let url = ('mongodb://'+config.mongodbConfig.username+':'+config.mongodbConfig.password+'@'+ config.mongodbConfig.host +':'+ config.mongodbConfig.port +'/'+config.mongodbConfig.dbname);
 
-// const mlaboptions = {
-//     autoIndex: false, // Don't build indexes
-//     autoReconnect:true,
-//     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-//     reconnectInterval: 500, // Reconnect every 500ms
-//     poolSize: 10, // Maintain up to 10 socket connections
-//     // If not connected, return errors immediately rather than waiting for reconnect
-//     bufferMaxEntries: 0,
-//     promiseLibrary:require('bluebird')
-// };
+const mlaboptions = {
+    autoIndex: false, // Don't build indexes
+    autoReconnect:true,
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500, // Reconnect every 500ms
+    poolSize: 10, // Maintain up to 10 socket connections
+    // If not connected, return errors immediately rather than waiting for reconnect
+    bufferMaxEntries: 0,
+    promiseLibrary:require('bluebird')
+};
 
 mongoose.Promise=global.Promise;
 
-// mongoose.connect(url,mlaboptions);
-mongoose.connect('mongodb://127.0.0.1:27017/gpa');
+mongoose.connect(url,mlaboptions);
+// mongoose.connect('mongodb://127.0.0.1:27017/gpa');
 
 let db = mongoose.connection;
 db.on('connected',()=>{

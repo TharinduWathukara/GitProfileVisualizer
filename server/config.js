@@ -5,10 +5,10 @@ const githubConfig ={
 // this is for github authentication.
 
 const mongodbConfig={
-    username:"username",
-    password:"password",
-    host:"host",
-    port:"port",
+    username:"gpa",
+    password:"gitprofilevisualizer",
+    host:"ds059365.mlab.com",
+    port:"59365",
     dbname:"gpa"
 }
 //this is for mongodb authentication.
