@@ -572,7 +572,7 @@ githubFunctions = {
                 }
 
                 function checkDir(content){
-                    var list = ['node_modules','dist','build','test','bootstrap'];
+                    var list = ['node_modules','dist','build','test','bootstrap','svg'];
 
                     for(var j=0;j<list.length;j++){
                         if(content.name.includes(list[j])){

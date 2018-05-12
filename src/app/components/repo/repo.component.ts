@@ -17,6 +17,8 @@ export class RepoComponent implements OnInit {
   private username:string;
   private codeQuality:any[];
 
+  private codeQualityLoading:boolean;
+
   private file_name:string;
 
 
@@ -48,7 +50,9 @@ export class RepoComponent implements OnInit {
 
 
   getCodeQuality(){
+    this.codeQualityLoading = true;
     this.profileService.getCodeQuality(this.username,this.route.snapshot.params['name']).subscribe(data =>{
+      this.codeQualityLoading = false;
       this.codeQuality = data.files;
       console.log(data);
     });

@@ -241,7 +241,7 @@
       <div class="col-md-2">
         <table>
           <tr>
-            <td>
+            <td valign="top">
               <img src="../../../assets/imgs/svg/rating.svg" style="width:50px;" alt="Repositories">
             </td>
             <td style="padding-left: 10px;">
@@ -255,7 +255,7 @@
       <div class="col-md-2">
         <table>
           <tr>
-            <td>
+            <td valign="top">
               <img src="../../../assets/imgs/svg/conference_call.svg" style="width:50px;" alt="Repositories">
             </td>
             <td style="padding-left: 10px;">
@@ -269,7 +269,7 @@
       <div class="col-md-2">
         <table>
           <tr>
-            <td class="text-center">
+            <td valign="top">
               <img src="../../../assets/imgs/svg/answers.svg" style="width:50px;" alt="Repositories">
             </td>
             <td style="padding-left: 10px;">
@@ -283,7 +283,7 @@
       <div class="col-md-2">
         <table>
           <tr>
-            <td class="text-center">
+            <td valign="top">
               <img src="../../../assets/imgs/svg/voice_presentation.svg" style="width:50px;" alt="Repositories">
             </td>
             <td style="padding-left: 10px;">
@@ -297,7 +297,7 @@
       <div class="col-md-2">
         <table>
           <tr>
-            <td class="text-center">
+            <td valign="top">
               <img src="../../../assets/imgs/svg/bullish.svg" style="width:50px;" alt="Repositories">
             </td>
             <td style="padding-left: 10px;">
@@ -332,6 +332,93 @@
 
     <div class="container text-center" style="width: 100%; margin-top: 15px;">
       <button type="button" class="btn btn-success btn-lg text-center" style="border-radius: 0;" (click)="getCodeQuality()">Analyze My Code</button>
+    </div>
+
+    <div *ngIf="codeQualityLoading" class="container text-center" style="width: 100%; margin-top: 20px;">
+      <img src="../../../assets/imgs/loading.gif" style="width: 100px;">
+      <p style="font-size: 15px;">Analyzing your Code... Please wait... </p>
+    </div>
+
+    <!-- this is for showing code analyzing results -->
+    <div *ngIf="codeQuality" class="container doughnutChartsContainer" style="width: 100%; margin-top: 15px;">
+      <p class="text-center" style="color:black; font-size: 30px;">Code Analyzing Results</p>
+      <div class="form-group" style="display:inline-block; margin-right:20px;">
+        <label>Search by File name :</label>
+        <input class="form-control" type="text" [(ngModel)]="file_name" placeholder="Search by file name" style="width:250px;" autofocus/>
+      </div>
+      <div *ngFor="let file of codeQuality | search : file_name" class="container profile-support-details" style="width:96%; margin-bottom: 15px; border: 1px solid darkgray;">
+        <p class="text-center" style="font-size: 20px; margin-top: 20px;">{{ file.name }} <span style="font-size: 15px;" *ngIf="file.path">({{ file.path }})</span></p>
+        <hr>
+        <div class="row continer" style="width: 100%">
+          <div class="col-md-4">
+            <table>
+              <tr>
+                <td valign="top">
+                  <img src="../../../assets/imgs/svg/document.svg" style="width:50px;" alt="Repositories">
+                </td>
+                <td style="padding-left: 10px;">
+                  <p style="font-size: 15px; font-weight: bold;">Lines of Code</p>
+                  <p *ngIf="file.total">Total : {{ file.total }}</p>
+                  <p *ngIf="!file.total">Total : 0</p>
+                  <p *ngIf="file.source">Source : {{ file.source }}</p>
+                  <p *ngIf="!file.source">Source : 0</p>
+                  <p *ngIf="file.empty">Empty : {{ file.empty }}</p>
+                  <p *ngIf="!file.empty">Empty : 0</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-4">
+            <table>
+              <tr>
+                <td valign="top">
+                  <img src="../../../assets/imgs/svg/comments.svg" style="width:50px;" alt="Repositories">
+                </td>
+                <td style="padding-left: 10px;">
+                  <p style="font-size: 15px; font-weight: bold;">Comments</p>
+                  <p *ngIf="file.comment">Total : {{ file.comment }}</p>
+                  <p *ngIf="!file.comment">Total : 0</p>
+                  <p *ngIf="file.single">Single line : {{ file.single }}</p>
+                  <p *ngIf="!file.single">Single line : 0</p>
+                  <p *ngIf="file.block">Block : {{ file.block }}</p>
+                  <p *ngIf="!file.block">Block : 0</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-4">
+            <table>
+              <tr>
+                <td valign="top">
+                  <img src="../../../assets/imgs/svg/conference_call.svg" style="width:50px;" alt="Repositories">
+                </td>
+                <td style="padding-left: 10px;">
+                  <p style="font-size: 15px; font-weight: bold;">Size and TODOs</p>
+                  <p *ngIf="file.size">Size : {{ file.size }}</p>
+                  <p *ngIf="file.todo">TODOs : {{ file.todo }}</p>
+                  <p *ngIf="!file.todo">TODOs : 0</p>
+                  
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div>
+          <table>
+            <tr>
+              <td valign="top">
+                <img src="../../../assets/imgs/svg/high_priority.svg" style="width:50px;" alt="Repositories">
+              </td>
+              <td style="padding-left: 10px;">
+                <p style="font-size: 15px; font-weight: bold;">Out of length lines</p>
+                <p *ngIf="file.outLenghtLines">Total : {{ file.outLenghtLines }}</p>
+                <p *ngIf="!file.outLenghtLines">Total : 0</p>
+                <p *ngIf="file.outLenghtLineNumbers">Line numbers : {{ file.outLenghtLineNumbers }}</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
